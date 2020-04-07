@@ -234,7 +234,8 @@ class TwampFacts(object):
                             each_test_session_dict['max_port'] = each_test_session.get('max-port')
                             each_test_session_dict['min_port'] = each_test_session.get('min-port')
                             each_test_session_dict['dscp'] = each_test_session.get('dscp')
-                            each_test_session_dict['packet_size'] = each_test_session.get('packet-size')
+                            each_test_session_dict['packet_size'] = each_test_session.get(
+                                'packet-size')
 
                             test_session_list.append(each_test_session_dict)
 

@@ -38,7 +38,8 @@ class User(ConfigBase):
         :rtype: A dictionary
         :returns: The current configuration as a dictionary
         """
-        facts, _warnings = Facts(self._module).get_facts(self.gather_subset, self.gather_network_resources)
+        facts, _warnings = Facts(self._module).get_facts(
+            self.gather_subset, self.gather_network_resources)
         user_facts = facts['ansible_network_resources'].get('user')
         if not user_facts:
             return []
@@ -106,6 +107,7 @@ class User(ConfigBase):
         elif state == 'replaced':
             commands = self._state_replaced(want, have)
         return commands
+
     def _state_replaced(self, want, have):
         """ The command generator when state is replaced
 
@@ -155,7 +157,7 @@ class User(ConfigBase):
     def _set_config(self, want, have):
         commands = []
 
-        differ = DictDiffer(have, want, {'name':[0, 1]})
+        differ = DictDiffer(have, want, {'name': [0, 1]})
 
         dict_diff = differ.deepdiff()
 
@@ -175,7 +177,7 @@ class User(ConfigBase):
                     if expansion is not None:
                         temp_cmd = '{} expansion {}'.format(temp_cmd, expansion)
                     commands.append(temp_cmd)
-            
+
             description = user_config.get('description')
             if description is not None:
                 commands.append('{} description {}'.format(cmd, description))
@@ -184,17 +186,17 @@ class User(ConfigBase):
                 for key, value in session.items():
                     if isinstance(value, bool):
                         value = str(value).lower()
-                    commands.append('{} session {} {}'.format(cmd, key.replace('_', '-'), value))                
-            
+                    commands.append('{} session {} {}'.format(cmd, key.replace('_', '-'), value))
+
         return commands
-    
+
     def _delete_config(self, want, have):
         commands = []
 
         if not want and have:
             return ['no user']
-        
-        differ = DictDiffer(have, want, {'name':[0, 1]})
+
+        differ = DictDiffer(have, want, {'name': [0, 1]})
         dict_intsec = differ.deepintersect()
         for user in dict_intsec:
             name = user.get('name')
@@ -212,7 +214,7 @@ class User(ConfigBase):
                         continue
                     temp_cmd = '{} alias {}'.format(no_user_cmd, alias_name)
                     commands.append(temp_cmd)
-            
+
             description = user.get('description')
             if description is not None:
                 commands.append('{} description'.format(no_user_cmd))
@@ -222,5 +224,5 @@ class User(ConfigBase):
                     if key == 'n_keys':
                         continue
                     commands.append('{} session {}'.format(no_user_cmd, key.replace('_', '-')))
-            
+
         return commands

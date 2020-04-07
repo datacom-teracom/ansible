@@ -54,8 +54,9 @@ class UserFacts(object):
                 'show running-config user | details | nomore | display keypath'
             )
 
-        config = parse_current_config(data, self.argument_spec, 'user', {'user':'name', 'alias':'name'})
-        
+        config = parse_current_config(data, self.argument_spec, 'user', {
+                                      'user': 'name', 'alias': 'name'})
+
         facts = {}
         if config:
             params = utils.validate_config(self.argument_spec, config)
