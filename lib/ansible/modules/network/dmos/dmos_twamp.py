@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,207 +32,208 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_twamp
-version_added: 2.9
-short_description: 'Manages Two-Way Active Measurement Protocol on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages Two-Way Active Measurement Protocol on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of Two-Way Active Measurement Protocol
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A list of Two-Way Active Measurement Protocol configurations
+    description: A list of Two-Way Active Measurement Protocol configurations.
     type: list
     elements: dict
     suboptions:
       reflector:
-        description: TWAMP reflector configuration
+        description: TWAMP reflector configuration.
         type: dict
         suboptions:
           admin_status:
-            description: The administrative status of the TWAMP reflector
+            description: The administrative status of the TWAMP reflector.
             type: str
             choices:
               - up
               - down
           ipv4:
-            description: IPv4 configuration
+            description: IPv4 configuration.
             type: dict
             suboptions:
               client_address:
-                description: White list client address
+                description: White list client address.
                 type: list
                 elements: dict
                 suboptions:
                   address:
-                    description: Client address
+                    description: Client address.
                     type: str
                     required: true
                   state:
-                    description: Connection status
+                    description: Connection status.
                     type: str
                     choices:
                       - enable
                       - disable
               client_network:
-                description: White list client network
+                description: White list client network.
                 type: list
                 elements: dict
                 suboptions:
                   network:
-                    description: Client network
+                    description: Client network.
                     type: str
                     required: true
                   state:
-                    description: Connection status
+                    description: Connection status.
                     type: str
                     choices:
                       - enable
                       - disable
           ipv6:
-            description: IPv6 configuration
+            description: IPv6 configuration.
             type: dict
             suboptions:
               client_address:
-                description: White list client address
+                description: White list client address.
                 type: list
                 elements: dict
                 suboptions:
                   address:
-                    description: Client address
+                    description: Client address.
                     type: str
                     required: true
                   state:
-                    description: Connection status
+                    description: Connection status.
                     type: str
                     choices:
                       - enable
                       - disable
               client_network:
-                description: White list client network
+                description: White list client network.
                 type: list
                 elements: dict
                 suboptions:
                   network:
-                    description: Client network
+                    description: Client network.
                     type: str
                     required: true
                   state:
-                    description: Connection status
+                    description: Connection status.
                     type: str
                     choices:
                       - enable
                       - disable
           port:
-            description: <1024-65535> TWAMP Server Port
+            description: <1024-65535> TWAMP Server Port.
             type: int
       sender:
-        description: TWAMP sender configuration
+        description: TWAMP sender configuration.
         type: dict
         suboptions:
           admin_status:
-            description: The administrative status of the TWAMP sender
+            description: The administrative status of the TWAMP sender.
             type: str
             choices:
               - up
               - down
           connection:
-            description: TWAMP sender connection configuration
+            description: TWAMP sender connection configuration.
             type: list
             elements: dict
             suboptions:
               id:
-                description: TWAMP sender connection ID
+                description: TWAMP sender connection ID.
                 type: int
                 required: true
               admin_status:
-                description: The administrative status of the TWAMP sender connection
+                description: The administrative status of the TWAMP sender connection.
                 type: str
                 choices:
                   - up
                   - down
               ipv4:
-                description: Ipv4 family configuration
+                description: Ipv4 family configuration.
                 type: dict
                 suboptions:
                   source_address:
-                    description: TWAMP connection source ip address
+                    description: TWAMP connection source ip address.
                     type: str
                   target_address:
-                    description: TWAMP connection target ip address
+                    description: TWAMP connection target ip address.
                     type: str
               ipv6:
-                description: Ipv6 family configuration
+                description: Ipv6 family configuration.
                 type: dict
                 suboptions:
                   source_address:
-                    description: TWAMP connection source ip address
+                    description: TWAMP connection source ip address.
                     type: str
                   target_address:
-                    description: TWAMP connection target ip address
+                    description: TWAMP connection target ip address.
                     type: str
               number_of_packets:
-                description: <1-65535> Number of packets sent on every test
+                description: <1-65535> Number of packets sent on every test.
                 type: int
               server_port:
-                description: <1024-65535> Server port number for TCP connection
+                description: <1024-65535> Server port number for TCP connection.
                 type: int
               test_interval:
-                description: <0-65535> Test interval in seconds
+                description: <0-65535> Test interval in seconds.
                 type: int
               test_session:
-                description: TWAMP sender test-session configuration
+                description: TWAMP sender test-session configuration.
                 type: list
                 elements: dict
                 suboptions:
                   id:
-                    description: TWAMP sender test-session ID
+                    description: TWAMP sender test-session ID.
                     type: int
                     required: true
                   dscp:
                     description: '<0 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 22 | 24 |
-                    26 | 28 | 30 | 32 | 34 | 36 | 38 | 40 | 46 | 48 | 56> DSCP value'
+                    26 | 28 | 30 | 32 | 34 | 36 | 38 | 40 | 46 | 48 | 56> DSCP value.'
                     type: int
                   ipv4:
-                    description: Ipv4 family configuration
+                    description: Ipv4 family configuration.
                     type: dict
                     suboptions:
                       source_address:
-                        description: TWAMP test-session source ip address
+                        description: TWAMP test-session source ip address.
                         type: str
                       target_address:
-                        description: TWAMP test-session target ip address
+                        description: TWAMP test-session target ip address.
                         type: str
                   ipv6:
-                    description: Ipv6 family configuration
+                    description: Ipv6 family configuration.
                     type: dict
                     suboptions:
                       source_address:
-                        description: TWAMP test-session source ip address
+                        description: TWAMP test-session source ip address.
                         type: str
                       target_address:
-                        description: TWAMP test-session target ip address
+                        description: TWAMP test-session target ip address.
                         type: str
                   max_port:
-                    description: <1024-65535> Server maximum port number
+                    description: <1024-65535> Server maximum port number.
                     type: int
                   min_port:
-                    description: <1024-65535> Server minimum port number
+                    description: <1024-65535> Server minimum port number.
                     type: int
                   packet_size:
-                    description: <64-65535> Packet size value
+                    description: <64-65535> Packet size value.
                     type: int
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -423,21 +424,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

@@ -1,6 +1,6 @@
 #
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
@@ -156,7 +156,12 @@ class Sntp(ConfigBase):
         return commands
 
     def _set_config(self, want, have):
-        # Set the interface config based on the want and have config
+        """ Commands to set configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to set the current configuration
+                  of the provided objects
+        """
         commands = []
 
         differ = DictDiffer(have, want, {'id': [1], 'address': [1]})
@@ -226,6 +231,12 @@ class Sntp(ConfigBase):
         return commands
 
     def _delete_config(self, want, have):
+        """ Commands to delete configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to delete the current configuration
+                  of the provided objects
+        """
         commands = []
 
         if not want and have:

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,44 +32,45 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_l2_interface
-version_added: 2.9
-short_description: 'Manages Layer-2 interface on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages Layer-2 interface on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of Layer-2 interfaces
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A dictionary of Layer-2 interface options 
+    description: A dictionary of Layer-2 interface options.
     type: list
     elements: dict
     suboptions:
       interface_name:
-        description: L2 Interface name
+        description: L2 interface name.
         type: str
         required: true
       native_vlan_id:
-        description: Layer 2 Interface Native VLAN
+        description: Layer 2 Interface Native VLAN.
         type: int
       qinq:
-        description: IEEE 802.1Q (QinQ)
+        description: IEEE 802.1Q (QinQ).
         type: bool
       storm_control:
-        description: Storm Control configuration
+        description: Storm Control configuration.
         type: list
         elements: dict
         suboptions:
           traffic:
-            description: Storm Control configuration traffic
+            description: Storm Control configuration traffic.
             type: str
             required: true
             choices:
@@ -77,11 +78,11 @@ options:
               - multicast
               - unicast
           percent:
-            description: <0.01..100> Percentage of interface nominal speed in steps of 0.01
+            description: <0.01..100> Percentage of interface nominal speed in steps of 0.01.
             type: float
             default: 1
       tpid:
-        description: Tag protocol identifier (TPID) used to identify received frames as VLAN-tagged
+        description: Tag protocol identifier (TPID) used to identify received frames as VLAN-tagged.
         type: str
         choices:
           - '0x88a8'
@@ -89,7 +90,7 @@ options:
           - '0x9100'
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -190,21 +191,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

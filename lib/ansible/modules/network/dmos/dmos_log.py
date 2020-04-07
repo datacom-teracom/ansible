@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,35 +32,36 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_log
-version_added: 2.9
-short_description: 'Manages Log on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages Log on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of System Log
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A dict of system log messages configuration
+    description: A dict of system log messages configuration.
     type: list
     elements: dict
     suboptions:
       syslog:
-        description: IP address of syslog server to be notified
+        description: IP address of syslog server to be notified.
         type: list
         elements: str
       severity:
         type: str
         description:
-        - Severity level of the log messages
+        - Severity level of the log messages.
         choices:
         - alert
         - critical
@@ -71,7 +72,7 @@ options:
         - warning
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -133,21 +134,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

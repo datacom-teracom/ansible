@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,108 +32,109 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
-module: dmos_l2_interface
-version_added: 2.9
-short_description: 'Manages Layer-3 interface on DATACOM DmOS devices.'
+module: dmos_l3_interface
+version_added: '2.10'
+short_description: Manages Layer-3 interface on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of Layer-3 interfaces
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A dictionary of Layer-3 interface options 
+    description: A dictionary of Layer-3 interface options.
     type: list
     elements: dict
     suboptions:
       name:
-        description: The name of the interface
+        description: L3 interface name.
         type: str
         required: true
       description:
-        description: A textual description of the interface
+        description: A textual description of the interface.
         type: str
       lower_layer_if:
-        description: <1-4094> VLAN ID to be associated with this logical interface
+        description: <1-4094> VLAN ID to be associated with this logical interface.
         type: int
       vlan_link_detect:
-        description: Enables/Disables the VLAN link detect
+        description: Enables/Disables the VLAN link detect.
         type: bool
       vrf:
-        description: Assign a VRF instance to the interface
+        description: Assign a VRF instance to the interface.
         type: str
       ip_mtu:
-        description: <68-9000> Control Plane IP Maximum Transmission Unit configuration
+        description: <68-9000> Control Plane IP Maximum Transmission Unit configuration.
         type: int
       ipv4:
-        description: IPv4 configuration
+        description: IPv4 configuration.
         type: dict
         suboptions:
           address:
-            description: IPv4 address
+            description: IPv4 address.
             type: str
           secondary:
-            description: Secondary IPv4 address
+            description: Secondary IPv4 address.
             type: list
             elements: str
       ipv6:
-        description: IPv6 configuration
+        description: IPv6 configuration.
         type: dict
         suboptions:
           address:
-            description: IPv6 address
+            description: IPv6 address.
             type: list
             elements: str
           enable:
-            description: Enable IPv6 on interface
+            description: Enable IPv6 on interface.
             type: bool
           nd_ra:
-            description: Neighbor Discovery - Router Advertisement configuration
+            description: Neighbor Discovery - Router Advertisement configuration.
             type: dict
             suboptions:
               lifetime:
-                description: <0-9000> IPv6 Router Advertisement lifetime configuration
+                description: <0-9000> IPv6 Router Advertisement lifetime configuration.
                 type: int
               max_interval:
-                description: <4-1800> IPv6 Router Advertisement maximum interval configuration
+                description: <4-1800> IPv6 Router Advertisement maximum interval configuration.
                 type: int
               min_interval:
-                description: <3-1350> IPv6 Router Advertisement minimum interval configuration
+                description: <3-1350> IPv6 Router Advertisement minimum interval configuration.
                 type: int
               mtu_suppress:
-                description: Suppress MTU option from RA messages
+                description: Suppress MTU option from RA messages.
                 type: bool
               prefix:
-                description: IPv6 prefix to be sent in RA messages
+                description: IPv6 prefix to be sent in RA messages.
                 type: list
                 elements: dict
                 suboptions:
                   ip:
-                    description: IPv6 prefix
+                    description: IPv6 prefix.
                     type: str
                     required: true
                   no_advertise:
-                    description: Avoid advertising IPv6 prefix to hosts
+                    description: Avoid advertising IPv6 prefix to hosts.
                     type: bool
                   no_autoconfig:
-                    description: Avoid using IPv6 prefix for autoconfiguration
+                    description: Avoid using IPv6 prefix for autoconfiguration.
                     type: bool
                   off_link:
-                    description: Avoid using IPv6 prefix for on-link determination
+                    description: Avoid using IPv6 prefix for on-link determination.
                     type: bool
               suppress:
-                description: Avoid sending IPv6 Router Advertisement from this interface
+                description: Avoid sending IPv6 Router Advertisement from this interface.
                 type: bool
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -325,21 +326,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

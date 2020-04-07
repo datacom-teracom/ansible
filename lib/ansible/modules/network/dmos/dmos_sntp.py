@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,76 +32,77 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_sntp
-version_added: 2.9
-short_description: 'Manages Simple Network Time Protocol on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages Simple Network Time Protocol on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of Simple Network Time Protocol
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A list of Simple Network Time Protocol configurations
+    description: A list of Simple Network Time Protocol configurations.
     type: list
     elements: dict
     suboptions:
       auth:
-        description: Network time protocol authentication
+        description: Network time protocol authentication.
         type: bool
       auth_key:
-        description: Authentication key
+        description: Authentication key.
         type: list
         elements: dict
         suboptions:
           id:
-            description: <1-4294967295> Key identifier
+            description: <1-4294967295> Key identifier.
             required: true
             type: int
           pass:
-            description: Password
+            description: Password.
             type: str
       client:
-        description: Global SNTP service state
+        description: Global SNTP service state.
         type: bool
       max_poll:
-        description: <3-17> Longest polling interval (in power of two seconds)
+        description: <3-17> Longest polling interval (in power of two seconds).
         type: int
       min_poll:
-        description: <3-17> Shortest polling interval (in power of two seconds)
+        description: <3-17> Shortest polling interval (in power of two seconds).
         type: int
       server:
-        description: Network time protocol server configuration
+        description: Network time protocol server configuration.
         type: list
         elements: dict
         suboptions:
           address:
-            description: IP address in a.b.c.d or X:X:X:X::X format
+            description: IP address in a.b.c.d or X:X:X:X::X format.
             required: true
             type: str
           key_id:
-            description: <1-4294967295> Authentication key ID
+            description: <1-4294967295> Authentication key ID.
             type: int
       source:
-        description: Source IP address from which NTP server connection will be established
+        description: Source IP address from which NTP server connection will be established.
         type: dict
         suboptions:
           ipv4:
-            description: IPv4 Address
+            description: IPv4 Address.
             type: str
           ipv6:
-            description: IPv6 Address
+            description: IPv6 Address.
             type: str
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -115,7 +116,7 @@ EXAMPLES = """
 
 dmos_sntp:
   config:
-    - auth: false
+    - auth: true
       auth_key:
         - id: 10
           pass: test
@@ -136,7 +137,7 @@ dmos_sntp:
 
 # This configuration will result in the following commands:
 
-# - no sntp authenticate
+# - sntp authenticate
 # - sntp authentication-key 10 md5 test
 # - sntp authentication-key 12 md5 password
 # - sntp client
@@ -200,21 +201,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

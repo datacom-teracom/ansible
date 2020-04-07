@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
@@ -13,13 +13,13 @@ __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
-                    'supported_by': 'LDS Labs'}
+                    'supported_by': 'community'}
 
 
 DOCUMENTATION = """
 ---
 module: dmos_facts
-version_added: 2.9
+version_added: 2.10
 short_description: Get facts about dmos devices.
 description:
   - Collects facts from network devices running the dmos operating
@@ -27,7 +27,7 @@ description:
     respective resource name.  The facts module will always collect a
     base set of facts from the device and can enable or disable
     collection of additional facts.
-author: LDS Labs
+author: ['Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>', 'LDS Labs (@lds-labs)']
 options:
   gather_subset:
     description:
@@ -58,78 +58,6 @@ EXAMPLES = """
     gather_subset: all
     gather_network_resources: all
 
-# Collect only the log facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - log
-
-# Do not collect log facts
-- dmos_facts:
-    gather_network_resources:
-      - "!log"
-
-# Collect log and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: log
-
-# Collect only the sntp facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - sntp
-
-# Do not collect sntp facts
-- dmos_facts:
-    gather_network_resources:
-      - "!sntp"
-
-# Collect sntp and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: sntp
-
-# Collect only the vlan facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - vlan
-
-# Do not collect vlan facts
-- dmos_facts:
-    gather_network_resources:
-      - "!vlan"
-
-# Collect vlan and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: vlan
-
-# Collect only the linkagg facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - linkagg
-
-# Do not collect linkagg facts
-- dmos_facts:
-    gather_network_resources:
-      - "!linkagg"
-
-# Collect linkagg and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: linkagg
-
 # Collect only the l2_interface facts
 - dmos_facts:
     gather_subset:
@@ -147,71 +75,10 @@ EXAMPLES = """
 - dmos_facts:
     gather_subset: min
     gather_network_resources: l2_interface
-
-# Collect only the lldp facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - lldp
-
-# Do not collect lldp facts
-- dmos_facts:
-    gather_network_resources:
-      - "!lldp"
-
-# Collect lldp and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: lldp
-
-# Collect only the l3_interface facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - l3_interface
-
-# Do not collect l3_interface facts
-- dmos_facts:
-    gather_network_resources:
-      - "!l3_interface"
-
-# Collect l3_interface and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: l3_interface
-
-# Collect only the twamp facts
-- dmos_facts:
-    gather_subset:
-      - !all
-      - !min
-    gather_network_resources:
-      - twamp
-
-# Do not collect twamp facts
-- dmos_facts:
-    gather_network_resources:
-      - "!twamp"
-
-# Collect twamp and minimal default facts
-- dmos_facts:
-    gather_subset: min
-    gather_network_resources: twamp
 """
 
 RETURN = """
-ansible_net_gather_subset:
-  description: The list of fact subsets collected from the device
-  returned: always
-  type: list
-ansible_net_gather_network_resources:
-  description: The list of fact for network resource subsets collected from the device
-  returned: when the resource is configured
-  type: list
+See the respective resource module parameters for the tree.
 """
 
 from ansible.module_utils.basic import AnsibleModule

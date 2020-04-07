@@ -157,7 +157,12 @@ class L3_interface(ConfigBase):
         return commands
 
     def _set_config(self, want, have):
-        # Set the interface config based on the want and have config
+        """ Commands to set configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to set the current configuration
+                  of the provided objects
+        """
         commands = []
 
         differ = DictDiffer(have, want, {'name': [1], 'ip': [5]})
@@ -279,7 +284,12 @@ class L3_interface(ConfigBase):
         return commands
 
     def _delete_config(self, want, have):
-        # Set the interface config based on the want and have config
+        """ Commands to delete configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to delete the current configuration
+                  of the provided objects
+        """
         commands = []
 
         if not want and have:

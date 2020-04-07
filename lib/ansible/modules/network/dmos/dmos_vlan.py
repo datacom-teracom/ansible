@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,49 +32,50 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_vlan
-version_added: 2.9
-short_description: 'Manages VLANs on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages VLANs on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of VLANs
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A list of VLANs configurations
+    description: A list of VLANs configurations.
     type: list
     elements: dict
     suboptions:
       vlan_id:
-        description: <1-4094> VLAN ID
+        description: <1-4094> VLAN ID.
         type: int
         required: true
       name:
         description: Text name identifying the VLAN (max 32 chars).
         type: str
       interface:
-        description: Statically add interfaces to VLANs and remove interfaces from VLANs
+        description: Statically add interfaces to VLANs and remove interfaces from VLANs.
         type: list
         elements: dict
         suboptions:
           name:
-            description: Interface name
+            description: Interface name.
             type: str
             required: true
           tagged:
-            description: Set this interface as an tagged member
+            description: Set this interface as an tagged member.
             type: bool
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -146,21 +147,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

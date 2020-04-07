@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
 from ansible.module_utils.six import iteritems
 from copy import deepcopy
 

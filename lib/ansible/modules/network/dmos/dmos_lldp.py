@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,38 +32,39 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': 'LDS Labs'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_lldp
-version_added: 2.9
-short_description: 'Manages Link Layer Discovery Protocol on DATACOM DmOS devices.'
+version_added: '2.10'
+short_description: Manages Link Layer Discovery Protocol on DATACOM DmOS devices.
 description:
   - This module provides a declarative management of Link Layer Discovery Protocol
-    on DATACOM DmOS devices
-author: LDS Labs
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - Tested against DmOS version 5.2.0
-  - This module works with connection C(network_cli).
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: A list of Link Layer Discovery Protocol configurations
+    description: A list of Link Layer Discovery Protocol configurations.
     type: list
     elements: dict
     suboptions:
       interface:
-        description: Link Layer Discovery Protocol Interface Configuration
+        description: Link Layer Discovery Protocol Interface Configuration.
         type: list
         elements: dict
         suboptions:
           name:
-            description: Link Layer Discovery Protocol Interface name
+            description: Link Layer Discovery Protocol Interface name.
             type: str
             required: true
           admin_status:
-            description: Administrative LLDP port status
+            description: Administrative LLDP port status.
             type: str
             choices:
               - disabled
@@ -71,44 +72,44 @@ options:
               - tx-and-rx
               - tx-only
           notification:
-            description: Enable LLDP notifications for this interface
+            description: Enable LLDP notifications for this interface.
             type: bool
           tlv_port_description:
-            description: Port Description TLV
+            description: Port Description TLV.
             type: bool
           tlv_system_capabilities:
-            description: System Capabilities TLV
+            description: System Capabilities TLV.
             type: bool
           tlv_system_description:
-            description: System Description TLV
+            description: System Description TLV.
             type: bool
           tlv_system_name:
-            description: System Name TLV
+            description: System Name TLV.
             type: bool
       msg_fast_tx:
-        description: <1-3600> Time interval at which LLDP frames are transmitted during fast transmission period
+        description: <1-3600> Time interval at which LLDP frames are transmitted during fast transmission period.
         type: int
       msg_tx_hold_multi:
-        description: <2-10> TTL value expressed as a multiple of message-tx-interval
+        description: <2-10> TTL value expressed as a multiple of message-tx-interval.
         type: int
       msg_tx_interval:
-        description: <5-32768> Time interval at which LLDP frames are transmitted
+        description: <5-32768> Time interval at which LLDP frames are transmitted.
         type: int
       notification_interval:
-        description: <5-3600> Time interval between transmissions of LLDP notifications
+        description: <5-3600> Time interval between transmissions of LLDP notifications.
         type: int
       reinit_delay:
-        description: <1-10> Amount of delay until a re-initialization attempt
+        description: <1-10> Amount of delay until a re-initialization attempt.
         type: int
       tx_credit_max:
-        description: <1-100> Maximum number of consecutive LLDP frames that can be transmitted in a second
+        description: <1-100> Maximum number of consecutive LLDP frames that can be transmitted in a second.
         type: int
       tx_fast_init:
-        description: <1-8> Number of LLDP frames sent in fast transmission period
+        description: <1-8> Number of LLDP frames sent in fast transmission period.
         type: int
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -130,6 +131,7 @@ dmos_lldp:
         tlv_system_capabilities: true
         tlv_system_description: false
         tlv_system_name: true
+
       - name: gigabit-ethernet-1/1/2
         admin_status: rx-only
         notification: true
@@ -209,21 +211,6 @@ commands:
   returned: always
   type: list
   sample: ['command 1', 'command 2', 'command 3']
-  changed:
-  description: If configuration resulted in any change
-  returned: always
-  type: bool
-  sample: True or False
-msg:
-  description: Error message
-  returned: on error
-  type: string
-  sample: 'Aborted: reason'
-response:
-  description: The response of each executed commands
-  returned: always
-  type: list
-  sample: ['Aborted: reason']
 """
 
 

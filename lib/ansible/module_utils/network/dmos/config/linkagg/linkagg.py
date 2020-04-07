@@ -156,7 +156,12 @@ class Linkagg(ConfigBase):
         return commands
 
     def _set_config(self, want, have):
-        # Set the interface config based on the want and have config
+        """ Commands to set configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to set the current configuration
+                  of the provided objects
+        """
         commands = []
 
         differ = DictDiffer(have, want, {'lag_id': [1], 'name': [3]})
@@ -237,7 +242,12 @@ class Linkagg(ConfigBase):
         return [intf_cmd]
 
     def _delete_config(self, want, have):
-        # Set the interface config based on the want and have config
+        """ Commands to delete configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to delete the current configuration
+                  of the provided objects
+        """
         commands = []
 
         if not want and have:
