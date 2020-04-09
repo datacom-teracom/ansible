@@ -1,25 +1,29 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-import json
 
-from ansible.module_utils.basic import AnsibleModule
-
-from ansible.module_utils.network.dmos.dmos import dmos_argument_spec
-from ansible.module_utils.network.dmos.dmos import get_config, edit_config
-from ansible.module_utils.network.dmos.utils.utils import get_command_list_from_curly_braces, get_command_list_diff
-
+ANSIBLE_METADATA = {
+    'metadata_version': '1.1',
+    'status': ['preview'],
+    'supported_by': 'community'
+}
 
 DOCUMENTATION = """
 ---
 module: dmos_config
-version_added: 4.9
-short_description: execute configuration commands on dmos devices.
-description: execute configuration commands on dmos devices.
-author: Ansible Network Engineer
+version_added: '2.10'
+short_description: Execute configuration commands on dmos devices.
+description: Execute configuration commands on dmos devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 options:
   lines:
     description:
-      - list of DmOS configuration commands
+      - List of DmOS configuration commands to execute.
     required: false
 """
 
@@ -34,23 +38,32 @@ EXAMPLES = """
 RETURN = """
 changed:
   description: If configuration resulted in any change.
+  type: str
   returned: always
   sample: True or False
 changes:
   description: List of executed commands.
+  type: list
   returned: always
   sample: ["interface l3 test ipv4 address 10.0.0.1/24"]
 msg:
   description: Error message
+  type: dict
   returned: on error
-  type: string
   sample: 'Aborted: reason'
 response:
   description: The response of each executed commands
-  returned: always
   type: list
+  returned: always
   sample: ['Aborted: reason']
 """
+
+import json
+
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.network.dmos.dmos import dmos_argument_spec
+from ansible.module_utils.network.dmos.dmos import get_config, edit_config
+from ansible.module_utils.network.dmos.utils.utils import get_command_list_from_curly_braces, get_command_list_diff
 
 
 def main():

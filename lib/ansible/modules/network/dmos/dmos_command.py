@@ -1,24 +1,50 @@
 #!/usr/bin/python
-import time
+# -*- coding: utf-8 -*-
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.network.common.utils import transform_commands, to_lines
+"""
+The module file for dmos_command
+"""
 
-from ansible.module_utils.network.dmos.dmos import dmos_argument_spec
-from ansible.module_utils.network.dmos.dmos import run_commands
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
+ANSIBLE_METADATA = {
+    'metadata_version': '1.1',
+    'status': ['preview'],
+    'supported_by': 'community'
+}
 
 
 DOCUMENTATION = """
 ---
 module: dmos_command
-version_added: 4.9
-short_description: execute show commands on dmos devices.
-description: execute show commands on dmos devices.
-author: Ansible Network Engineer
+version_added: '2.10'
+short_description: Execute show commands on dmos devices.
+description: Execute show commands on dmos devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
+notes:
+  - Tested against DmOS version 5.2.0.
 options:
   commands:
     description:
-      - list of DmOS show command
+      - List of DmOS show command to execute.
+    type: list
+    required: true
+  match:
+    description:
+      - Check if lines as present in output
+    type: str
+    choices: ['exact']
+    required: false
+  lines:
+    description:
+      - List of lines to match
+    type: list
     required: false
 """
 
@@ -33,17 +59,28 @@ EXAMPLES = """
 RETURN = """
 changed:
   description: Always false.
+  type: str
   returned: always
   sample: True or False
 stdout:
   description: Raw output of command.
+  type: str
   returned: always
   sample: ["interface l3 test\n ipv4 address 10.0.0.1/24\n!"]
 stdout_lines:
   description: Raw output of command splitted in lines.
+  type: list
   returned: always
   sample: ["interface l3 test", "ipv4 address 10.0.0.1/24", "!"]
+warnings:
+  description: List of warnings generates in execution.
+  type: list
+  returned: Always
 """
+
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.network.common.utils import transform_commands, to_lines
+from ansible.module_utils.network.dmos.dmos import dmos_argument_spec, run_commands
 
 
 def parse_commands(module, warnings):

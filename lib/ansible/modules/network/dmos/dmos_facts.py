@@ -10,7 +10,6 @@ The module file for dmos_facts
 from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
-
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
@@ -19,7 +18,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = """
 ---
 module: dmos_facts
-version_added: 2.10
+version_added: '2.10'
 short_description: Get facts about dmos devices.
 description:
   - Collects facts from network devices running the dmos operating
@@ -27,7 +26,9 @@ description:
     respective resource name.  The facts module will always collect a
     base set of facts from the device and can enable or disable
     collection of additional facts.
-author: ['Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>', 'LDS Labs (@lds-labs)']
+author:
+    - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+    - LDS Labs (@lds-labs)
 options:
   gather_subset:
     description:
@@ -37,9 +38,9 @@ options:
         list of values to include a larger subset. Values can also be used
         with an initial C(M(!)) to specify that a specific subset should
         not be collected.
+    type: list
     required: false
-    default: 'all'
-    version_added: "2.2"
+    default: '!config'
   gather_network_resources:
     description:
       - When supplied, this argument will restrict the facts collected
@@ -48,37 +49,53 @@ options:
         Can specify a list of values to include a larger subset. Values
         can also be used with an initial C(M(!)) to specify that a
         specific subset should not be collected.
+    type: list
+    choices:
+      - all
+      - log
+      - sntp
+      - vlan
+      - linkagg
+      - l2_interface
+      - lldp
+      - l3_interface
+      - user
+      - twamp
     required: false
-    version_added: "2.9"
 """
 
 EXAMPLES = """
-# Gather all facts
-- dmos_facts:
+- name: Gather all facts
+  dmos_facts:
     gather_subset: all
     gather_network_resources: all
 
-# Collect only the l2_interface facts
-- dmos_facts:
+- name: Collect only the l2_interface facts
+  dmos_facts:
     gather_subset:
-      - !all
-      - !min
+      - '!all'
+      - '!min'
     gather_network_resources:
       - l2_interface
 
-# Do not collect l2_interface facts
-- dmos_facts:
+- name: Do not collect l2_interface facts
+  dmos_facts:
     gather_network_resources:
-      - "!l2_interface"
+      - '!l2_interface'
 
-# Collect l2_interface and minimal default facts
-- dmos_facts:
+- name: Collect l2_interface and minimal default facts
+  dmos_facts:
     gather_subset: min
     gather_network_resources: l2_interface
 """
 
 RETURN = """
-See the respective resource module parameters for the tree.
+ansible_facts:
+  description:
+    - Returns the facts collect from the device
+    - See the respective resource module parameters for the tree.
+  returned: always
+  type: dict
 """
 
 from ansible.module_utils.basic import AnsibleModule
