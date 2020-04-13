@@ -144,69 +144,68 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_l3_interface:
-  config:
-    - name: interface
-      description: Hello World
-      ip_mtu: 1280
-      lower_layer_if: 10
-      vlan_link_detect: true
-      ipv4:
-        address: 192.168.2.1/24
-        secondary:
-          - 192.168.1.1/24
-      ipv6:
-        address:
-          - 2018::1/64
-          - 2019::2/64
-        enable: true
-        nd_ra:
-          lifetime: 700
-          max_interval: 600
-          min_interval: 198
-          mtu_suppress: true
-          prefix:
-            - ip: 2018::/64
-              no_advertise: false
-              no_autoconfig: true
-              off_link: false
-            - ip: 2017::/64
-              no_advertise: true
-              no_autoconfig: false
-              off_link: false
-          suppress: false
-    - name: test
-      description: Hey jude
-      ip_mtu: 1280
-      lower_layer_if: 12
-      vlan_link_detect: true
-      ipv4:
-        address: 192.168.3.1/24
-        secondary:
-          - 192.168.4.1/24
-      ipv6:
-        address:
-          - 1918::1/64
-          - 1919::2/64
-        enable: true
-        nd_ra:
-          lifetime: 800
-          max_interval: 700
-          min_interval: 298
-          mtu_suppress: false
-          prefix:
-            - ip: 1918::/64
-              no_advertise: false
-              no_autoconfig: true
-              off_link: false
-            - ip: 1917::/64
-              no_advertise: true
-              no_autoconfig: false
-              off_link: false
-          suppress: true
-  state: merged
+- name: Using Merge
+  dmos_l3_interface:
+    config:
+      - name: interface
+        description: Hello World
+        ip_mtu: 1280
+        lower_layer_if: 10
+        vlan_link_detect: true
+        ipv4:
+          address: 192.168.2.1/24
+          secondary:
+            - 192.168.1.1/24
+        ipv6:
+          address:
+            - 2018::1/64
+            - 2019::2/64
+          enable: true
+          nd_ra:
+            lifetime: 700
+            max_interval: 600
+            min_interval: 198
+            mtu_suppress: true
+            prefix:
+              - ip: 2018::/64
+                no_advertise: false
+                no_autoconfig: true
+                off_link: false
+              - ip: 2017::/64
+                no_advertise: true
+                no_autoconfig: false
+                off_link: false
+            suppress: false
+      - name: test
+        description: Hey jude
+        ip_mtu: 1280
+        lower_layer_if: 12
+        vlan_link_detect: true
+        ipv4:
+          address: 192.168.3.1/24
+          secondary:
+            - 192.168.4.1/24
+        ipv6:
+          address:
+            - 1918::1/64
+            - 1919::2/64
+          enable: true
+          nd_ra:
+            lifetime: 800
+            max_interval: 700
+            min_interval: 298
+            mtu_suppress: false
+            prefix:
+              - ip: 1918::/64
+                no_advertise: false
+                no_autoconfig: true
+                off_link: false
+              - ip: 1917::/64
+                no_advertise: true
+                no_autoconfig: false
+                off_link: false
+            suppress: true
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -251,39 +250,38 @@ dmos_l3_interface:
 # - interface l3 test ipv6 nd ra suppress
 # - no interface l3 test ipv6 nd ra mtu suppress
 
-### Using Delete ###
-
-dmos_l3_interface:
-  config:
-    - name: interface
-      description: Hello World
-      ip_mtu: 1280
-      lower_layer_if: 10
-      vlan_link_detect: true
-      vrf: null
-      ipv4:
-        address: 192.168.2.1/24
-        secondary:
-          - 192.168.1.1/24
-      ipv6:
-        address:
-          - 2018::1/64
-          - 2019::2/64
-        enable: true
-        nd_ra:
-          lifetime: 700
-          max_interval: 600
-          min_interval: 198
-          mtu_suppress: true
-          prefix:
-            - ip: 2017::/64
-              no_advertise: true
-              no_autoconfig: false
-              off_link: false
-            - ip: 2018::/64
-          suppress: false
-    - name: test
-  state: deleted
+- name: Using Deleted
+  dmos_l3_interface:
+    config:
+      - name: interface
+        description: Hello World
+        ip_mtu: 1280
+        lower_layer_if: 10
+        vlan_link_detect: true
+        vrf: null
+        ipv4:
+          address: 192.168.2.1/24
+          secondary:
+            - 192.168.1.1/24
+        ipv6:
+          address:
+            - 2018::1/64
+            - 2019::2/64
+          enable: true
+          nd_ra:
+            lifetime: 700
+            max_interval: 600
+            min_interval: 198
+            mtu_suppress: true
+            prefix:
+              - ip: 2017::/64
+                no_advertise: true
+                no_autoconfig: false
+                off_link: false
+              - ip: 2018::/64
+            suppress: false
+      - name: test
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -312,12 +310,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

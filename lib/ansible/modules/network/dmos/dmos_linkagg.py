@@ -130,38 +130,37 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_linkagg:
-  config:
-    - lag:
-      - lag_id: 1
-        admin_status: up
-        description: Hello World
-        load_balance: dst-ip
-        interface:
-          - name: gigabit-ethernet-1/1/1
-            port_prio: 12
-          - name: gigabit-ethernet-1/1/3
-            port_prio: 15
-        max_active: 4
-        min_active: 3
-        mode: active
-        period: long
-      - lag_id: 2
-        admin_status: down
-        description: Hey Jude
-        load_balance: enhanced
-        interface:
-          - name: gigabit-ethernet-1/1/2
-            port_prio: 113
-          - name: gigabit-ethernet-1/1/5
-        max_active: 2
-        min_active: 1
-        mode: passive
-        period: short
-      sys_prio: 400
-  state: merged
+- name: Using Merged
+  dmos_linkagg:
+    config:
+      - lag:
+        - lag_id: 1
+          admin_status: up
+          description: Hello World
+          load_balance: dst-ip
+          interface:
+            - name: gigabit-ethernet-1/1/1
+              port_prio: 12
+            - name: gigabit-ethernet-1/1/3
+              port_prio: 15
+          max_active: 4
+          min_active: 3
+          mode: active
+          period: long
+        - lag_id: 2
+          admin_status: down
+          description: Hey Jude
+          load_balance: enhanced
+          interface:
+            - name: gigabit-ethernet-1/1/2
+              port_prio: 113
+            - name: gigabit-ethernet-1/1/5
+          max_active: 2
+          min_active: 1
+          mode: passive
+          period: short
+        sys_prio: 400
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -185,26 +184,25 @@ dmos_linkagg:
 # - link-aggregation interface lag 2 mode passive
 # - link-aggregation interface lag 2 period short
 
-### Using Delete ###
-
-dmos_linkagg:
-  config:
-    - lag:
-      - lag_id: 1
-        admin_status: up
-        description: Hello World
-        load_balance: dst-ip
-        interface:
-          - name: gigabit-ethernet-1/1/1
-            port_prio: 12
-          - name: gigabit-ethernet-1/1/3
-        max_active: 4
-        min_active: 3
-        mode: active
-        period: long
-      - lag_id: 2
-      sys_prio: 400
-  state: deleted
+- name: Using Delete
+  dmos_linkagg:
+    config:
+      - lag:
+        - lag_id: 1
+          admin_status: up
+          description: Hello World
+          load_balance: dst-ip
+          interface:
+            - name: gigabit-ethernet-1/1/1
+              port_prio: 12
+            - name: gigabit-ethernet-1/1/3
+          max_active: 8
+          min_active: 3
+          mode: active
+          period: long
+        - lag_id: 2
+        sys_prio: 400
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -226,12 +224,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

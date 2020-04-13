@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -32,66 +32,76 @@ __metaclass__ = type
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
-    'supported_by': '<support_group>'
+    'supported_by': 'community'
 }
 
 DOCUMENTATION = """
 ---
 module: dmos_user
-version_added: 2.9
-short_description: 'Manages <xxxx> attributes of <network_os> <resource>.'
-description: 'Manages <xxxx> attributes of <network_os> <resource>'
-author: Ansible Network Engineer
+version_added: '2.10'
+short_description: Manages User attributes on DATACOM DmOS devices.
+description:
+  - This module provides a declarative management of User
+    on DATACOM DmOS devices.
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
 notes:
-  - 'Tested against <network_os> <version>'
+  - Tested against DmOS version 5.2.0.
 options:
   config:
-    description: The DMOS user configuration
+    description: The DmOS user configuration.
     type: list
     elements: dict
     suboptions:
       name:
+        description: User name.
         type: str
       alias:
+        description: Command alias configuration.
         type: list
         elements: dict
         suboptions:
           name:
+            description: Name of the command alias.
             type: str
           expansion:
+            description: DmOS Command.
             type: str
       description:
+        description: User description.
         type: str
       session:
+        description: User specific default CLI session parameters.
         type: dict
         suboptions:
           complete_on_space:
-            description: Enable/disable completion on space
+            description: Enable/disable completion on space.
             type: bool
           devtools:
-            description: Enable/disable development tools
+            description: Enable/disable development tools.
             type: bool
           display_level:
-            description: Max depth to show when displaying configuration
+            description: Max depth to show when displaying configuration.
             type: int
           history:
-            description: History size
+            description: History size.
             type: int
           idle_timeout:
-            description: CLI idle-timeout in seconds
+            description: CLI idle-timeout in seconds.
             type: int
           ignore_leading_space:
-            description: Ignore leading whitespace
+            description: Ignore leading whitespace.
             type: bool
           paginate:
-            description: Paginate output from CLI commands
+            description: Paginate output from CLI commands.
             type: bool
           show_defaults:
-            description: Show default values when showing the configuration
+            description: Show default values when showing the configuration.
             type: bool
   state:
     description:
-    - The state the configuration should be left in
+    - The state the configuration should be left in.
     type: str
     choices:
     - merged
@@ -101,17 +111,31 @@ options:
     default: merged
 """
 EXAMPLES = """
+# configure completion on space, idle_timeout and paginate to false
+
+dmos_user:
+  config:
+    - name: sample_user
+      description: sample user config
+      session:
+        complete_on_space: true
+        idle_timeout: 60
+        paginate: false
+
+
 """
 RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

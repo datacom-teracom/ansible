@@ -243,65 +243,64 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_twamp:
-  config:
-    - reflector:
-        port: 862
-        admin_status: up
-        ipv4:
-          client_address:
-            - address: 10.0.0.1
-              state: disable
-            - address: 10.0.0.2
-              state: enable
-          client_network:
-            - network: 20.0.0.0/24
-              state: enable
-            - network: 10.0.0.0/24
-              state: disable
-        ipv6:
-          client_address:
-            - address: 2018::1
-              state: enable
-            - address: 2018::2
-              state: disable
-          client_network:
-            - network: 2019::/64
-              state: enable
-            - network: 2017::/64
-              state: disable
-      sender:
-        admin_status: down
-        connection:
-          - id: 2
-            admin_status: down
-            ipv6:
-              source_address: 2018::1
-              target_address: 2018::2
-            number_of_packets: 50
-            server_port: 862
-            test_interval: 6
-            test_session:
-              - id: 2
-                ipv4:
-                  source_address: 10.0.0.1
-                  target_address: 10.0.0.2
-                max_port: 65535
-                min_port: 1024
-                dscp: 0
-                packet_size: 64
-              - id: 3
-                ipv6:
-                  source_address: 2018::1
-                  target_address: 2018::2
-          - id: 3
-            admin_status: up
-            ipv4:
-              source_address: 10.0.0.1
-              target_address: 10.0.0.2
-  state: merged
+- name: Using Merged
+  dmos_twamp:
+    config:
+      - reflector:
+          port: 862
+          admin_status: up
+          ipv4:
+            client_address:
+              - address: 10.0.0.1
+                state: disable
+              - address: 10.0.0.2
+                state: enable
+            client_network:
+              - network: 20.0.0.0/24
+                state: enable
+              - network: 10.0.0.0/24
+                state: disable
+          ipv6:
+            client_address:
+              - address: 2018::1
+                state: enable
+              - address: 2018::2
+                state: disable
+            client_network:
+              - network: 2019::/64
+                state: enable
+              - network: 2017::/64
+                state: disable
+        sender:
+          admin_status: down
+          connection:
+            - id: 2
+              admin_status: down
+              ipv6:
+                source_address: 2018::1
+                target_address: 2018::2
+              number_of_packets: 50
+              server_port: 862
+              test_interval: 6
+              test_session:
+                - id: 2
+                  ipv4:
+                    source_address: 10.0.0.1
+                    target_address: 10.0.0.2
+                  max_port: 65535
+                  min_port: 1024
+                  dscp: 0
+                  packet_size: 64
+                - id: 3
+                  ipv6:
+                    source_address: 2018::1
+                    target_address: 2018::2
+            - id: 3
+              admin_status: up
+              ipv4:
+                source_address: 10.0.0.1
+                target_address: 10.0.0.2
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -334,50 +333,49 @@ dmos_twamp:
 # - oam twamp sender connection 2 test-session 2 min-port 1024
 # - oam twamp sender connection 2 test-session 2 packet-size 64
 
-### Using Delete ###
-
-dmos_twamp:
-  config:
-    - reflector:
-        port: 862
-        admin_status: down
-        ipv4:
-          client_address:
-            - address: 10.0.0.1
-              state: disable
-            - address: 10.0.0.2
-          client_network:
-            - network: 20.0.0.0/24
-              state: enable
-            - network: 10.0.0.0/24
-        ipv6:
-          client_address:
-            - address: 2018::1
-              state: enable
-            - address: 2018::2
-          client_network:
-            - network: 2017::/64
-              state: disable
-            - network: 2019::/64
-      sender:
-        admin_status: down
-        connection:
-          - id: 2
-            number_of_packets: 50
-            server_port: 862
-            test_interval: 6
-            test_session:
-              - id: 2
-                ipv4:
-                  source_address: 10.0.0.1
-                  target_address: 10.0.0.2
-                max_port: 65535
-                min_port: 1024
-                dscp: 0
-                packet_size: 64
-              - id: 3
-          - id: 3
-  state: deleted
+- name: Using Delete ###
+  dmos_twamp:
+    config:
+      - reflector:
+          port: 862
+          admin_status: down
+          ipv4:
+            client_address:
+              - address: 10.0.0.1
+                state: disable
+              - address: 10.0.0.2
+            client_network:
+              - network: 20.0.0.0/24
+                state: enable
+              - network: 10.0.0.0/24
+          ipv6:
+            client_address:
+              - address: 2018::1
+                state: enable
+              - address: 2018::2
+            client_network:
+              - network: 2017::/64
+                state: disable
+              - network: 2019::/64
+        sender:
+          admin_status: down
+          connection:
+            - id: 2
+              number_of_packets: 50
+              server_port: 862
+              test_interval: 6
+              test_session:
+                - id: 2
+                  ipv4:
+                    source_address: 10.0.0.1
+                    target_address: 10.0.0.2
+                  max_port: 65535
+                  min_port: 1024
+                  dscp: 0
+                  packet_size: 64
+                - id: 3
+            - id: 3
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -410,12 +408,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

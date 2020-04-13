@@ -1,3 +1,4 @@
+#
 # -*- coding: utf-8 -*-
 # Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
@@ -155,6 +156,12 @@ class User(ConfigBase):
         return commands
 
     def _set_config(self, want, have):
+        """ Commands to set configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to set the current configuration
+                  of the provided objects
+        """
         commands = []
 
         differ = DictDiffer(have, want, {'name': [0, 1]})
@@ -191,6 +198,12 @@ class User(ConfigBase):
         return commands
 
     def _delete_config(self, want, have):
+        """ Commands to delete configuration based on the want and have config
+
+        :rtype: A list
+        :returns: the commands necessary to delete the current configuration
+                  of the provided objects
+        """
         commands = []
 
         if not want and have:

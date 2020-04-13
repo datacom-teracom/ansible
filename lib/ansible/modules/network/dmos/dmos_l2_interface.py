@@ -100,33 +100,32 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_l2_interface:
-  config:
-    - interface_name: gigabit-ethernet-1/1/1
-      native_vlan_id: 12
-      qinq: false
-      storm_control:
-        - traffic: broadcast
-          percent: 1.0
-        - traffic: multicast
-          percent: 1.0
-        - traffic: unicast
-          percent: 1.0
-      tpid: '0x9100'
-    - interface_name: gigabit-ethernet-1/1/6
-      native_vlan_id: 10
-      qinq: true
-      storm_control:
-        - traffic: broadcast
-          percent: 10.1
-        - traffic: multicast
-          percent: 59.5
-        - traffic: unicast
-          percent: 0.1
-      tpid: '0x88a8'
-  state: merged
+- name: Using Merged
+  dmos_l2_interface:
+    config:
+      - interface_name: gigabit-ethernet-1/1/1
+        native_vlan_id: 12
+        qinq: false
+        storm_control:
+          - traffic: broadcast
+            percent: 1.0
+          - traffic: multicast
+            percent: 1.0
+          - traffic: unicast
+            percent: 1.0
+        tpid: '0x9100'
+      - interface_name: gigabit-ethernet-1/1/6
+        native_vlan_id: 10
+        qinq: true
+        storm_control:
+          - traffic: broadcast
+            percent: 10.1
+          - traffic: multicast
+            percent: 59.5
+          - traffic: unicast
+            percent: 0.1
+        tpid: '0x88a8'
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -143,23 +142,22 @@ dmos_l2_interface:
 # - switchport interface gigabit-ethernet-1/1/6 storm-control unicast 0.1
 # - switchport interface gigabit-ethernet-1/1/6 tpid 0x88a8
 
-### Using Deleted ###
-
-dmos_l2_interface:
-  config:
-    - interface_name: gigabit-ethernet-1/1/1
-      native_vlan_id: 12
-      qinq: false
-      storm_control:
-        - traffic: broadcast
-          percent: 1.0
-        - traffic: multicast
-          percent: 1.0
-        - traffic: unicast
-          percent: 1.0
-      tpid: '0x9100'
-    - interface_name: gigabit-ethernet-1/1/6
-  state: deleted
+- name: Using Deleted ###
+  dmos_l2_interface:
+    config:
+      - interface_name: gigabit-ethernet-1/1/1
+        native_vlan_id: 12
+        qinq: false
+        storm_control:
+          - traffic: broadcast
+            percent: 1.0
+          - traffic: multicast
+            percent: 1.0
+          - traffic: unicast
+            percent: 1.0
+        tpid: '0x9100'
+      - interface_name: gigabit-ethernet-1/1/6
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -177,12 +175,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

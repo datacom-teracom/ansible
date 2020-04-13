@@ -85,22 +85,21 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_vlan:
-  config:
-    - vlan_id: 2019
-      interface:
-        - name: gigabit-ethernet-1/1/1
-          tagged: true
-      name: null
-    - vlan_id: 2020
-      name: dmos_vlan
-      interface:
-        - name: gigabit-ethernet-1/1/2
-          tagged: false
-    - vlan_id: 2021
-  state: merged
+- name: Using Merged
+  dmos_vlan:
+    config:
+      - vlan_id: 2019
+        interface:
+          - name: gigabit-ethernet-1/1/1
+            tagged: true
+        name: null
+      - vlan_id: 2020
+        name: dmos_vlan
+        interface:
+          - name: gigabit-ethernet-1/1/2
+            tagged: false
+      - vlan_id: 2021
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -109,17 +108,16 @@ dmos_vlan:
 # - dot1q vlan 2020 interface gigabit-ethernet-1/1/2 untagged
 # - dot1q vlan 2021
 
-### Using Deleted ###
-
-dmos_vlan:
-  config:
-    - vlan_id: 2019
-      interface:
-        - name: gigabit-ethernet-1/1/1
-    - vlan_id: 2020
-      name: dmos_vlan
-    - vlan_id: 2021
-  state: deleted
+- name: Using Deleted
+  dmos_vlan:
+    config:
+      - vlan_id: 2019
+        interface:
+          - name: gigabit-ethernet-1/1/1
+      - vlan_id: 2020
+        name: dmos_vlan
+      - vlan_id: 2021
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -133,12 +131,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

@@ -119,34 +119,33 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
+- name: Using Merged
+  dmos_lldp:
+    config:
+      - interface:
+        - name: gigabit-ethernet-1/1/1
+          admin_status: rx-only
+          notification: true
+          tlv_port_description: false
+          tlv_system_capabilities: true
+          tlv_system_description: false
+          tlv_system_name: true
 
-dmos_lldp:
-  config:
-    - interface:
-      - name: gigabit-ethernet-1/1/1
-        admin_status: rx-only
-        notification: true
-        tlv_port_description: false
-        tlv_system_capabilities: true
-        tlv_system_description: false
-        tlv_system_name: true
-
-      - name: gigabit-ethernet-1/1/2
-        admin_status: rx-only
-        notification: true
-        tlv_port_description: false
-        tlv_system_capabilities: true
-        tlv_system_description: false
-        tlv_system_name: true
-      msg_fast_tx: 2020
-      msg_tx_hold_multi: 3
-      msg_tx_interval: 2020
-      notification_interval: 2020
-      reinit_delay: 3
-      tx_credit_max: 33
-      tx_fast_init: 3
-  state: merged
+        - name: gigabit-ethernet-1/1/2
+          admin_status: rx-only
+          notification: true
+          tlv_port_description: false
+          tlv_system_capabilities: true
+          tlv_system_description: false
+          tlv_system_name: true
+        msg_fast_tx: 2020
+        msg_tx_hold_multi: 3
+        msg_tx_interval: 2020
+        notification_interval: 2020
+        reinit_delay: 3
+        tx_credit_max: 33
+        tx_fast_init: 3
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -170,18 +169,17 @@ dmos_lldp:
 # - lldp tx-credit-max  33
 # - lldp tx-fast-init 3
 
-### Using Delete ###
-
-dmos_lldp:
-  config:
-    - interface:
-      - name: gigabit-ethernet-1/1/1
-        tlv_system_capabilities: true
-        tlv_system_name: true
-      - name: gigabit-ethernet-1/1/2
-      tx_credit_max: 33
-      tx_fast_init: 3
-  state: deleted
+- name: Using Delete ###
+  dmos_lldp:
+    config:
+      - interface:
+        - name: gigabit-ethernet-1/1/1
+          tlv_system_capabilities: true
+          tlv_system_name: true
+        - name: gigabit-ethernet-1/1/2
+        tx_credit_max: 33
+        tx_fast_init: 3
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -197,12 +195,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

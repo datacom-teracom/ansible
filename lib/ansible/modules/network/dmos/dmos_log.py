@@ -82,15 +82,14 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_log:
-  config:
-    - syslog:
-        - 192.168.1.1
-        - 192.168.2.1
-      severity: alert
-  state: merged
+- name: Using Merged
+  dmos_log:
+    config:
+      - syslog:
+          - 192.168.1.1
+          - 192.168.2.1
+        severity: alert
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -98,15 +97,14 @@ dmos_log:
 # - log syslog 192.168.1.1
 # - log syslog 192.168.2.1
 
-### Using Delete ###
-
-dmos_log:
-  config:
-    - syslog:
-        - 192.168.1.1
-        - 192.168.2.1
-      severity: informational
-  state: deleted
+- name: Using Delete
+  dmos_log:
+    config:
+      - syslog:
+          - 192.168.1.1
+          - 192.168.2.1
+        severity: informational
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -120,12 +118,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.

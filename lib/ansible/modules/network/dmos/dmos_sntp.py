@@ -112,28 +112,27 @@ options:
     default: merged
 """
 EXAMPLES = """
-### Using Merged ###
-
-dmos_sntp:
-  config:
-    - auth: true
-      auth_key:
-        - id: 10
-          pass: test
-        - id: 12
-          pass: password
-      client: true
-      max_poll: 15
-      min_poll: 12
-      server:
-        - address: 10.0.0.1
-          key_id: 10
-        - address: 20.0.0.2
-          key_id: 12
-      source:
-        ipv4: 100.10.10.1
-        ipv6: 1918::2019
-  state: merged
+- name:  Using Merged
+  dmos_sntp:
+    config:
+      - auth: true
+        auth_key:
+          - id: 10
+            pass: test
+          - id: 12
+            pass: password
+        client: true
+        max_poll: 15
+        min_poll: 12
+        server:
+          - address: 10.0.0.1
+            key_id: 10
+          - address: 20.0.0.2
+            key_id: 12
+        source:
+          ipv4: 100.10.10.1
+          ipv6: 1918::2019
+    state: merged
 
 # This configuration will result in the following commands:
 
@@ -148,26 +147,25 @@ dmos_sntp:
 # - sntp source ipv4 address 100.10.10.1
 # - sntp source ipv6 address 1918::2019
 
-### Using Delete ###
-
-dmos_sntp:
-  config:
-    - auth: true
-      auth_key:
-        - id: 10
-        - id: 12
-          pass: password
-      client: true
-      max_poll: 15
-      min_poll: 12
-      server:
-        - address: 10.0.0.1
-          key_id: 10
-        - address: 20.0.0.2
-      source:
-        ipv4: 100.10.10.1
-        ipv6: 1918::2019
-  state: deleted
+- name: Using Deletd
+  dmos_sntp:
+    config:
+      - auth: true
+        auth_key:
+          - id: 10
+          - id: 12
+            pass: password
+        client: true
+        max_poll: 15
+        min_poll: 12
+        server:
+          - address: 10.0.0.1
+            key_id: 10
+          - address: 20.0.0.2
+        source:
+          ipv4: 100.10.10.1
+          ipv6: 1918::2019
+    state: deleted
 
 # This configuration will result in the following commands:
 
@@ -187,12 +185,14 @@ RETURN = """
 before:
   description: The configuration prior to the model invocation.
   returned: always
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
 after:
   description: The resulting configuration model invocation.
   returned: when changed
+  type: list
   sample: >
     The configuration returned will always be in the same format
      of the parameters above.
