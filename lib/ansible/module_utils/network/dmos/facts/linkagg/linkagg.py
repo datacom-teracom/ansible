@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class LinkaggFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['lacp:link-aggregation']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -81,13 +85,13 @@ class LinkaggFacts(object):
         config = deepcopy(spec)
 
         system = conf.get('system')
-        if system != None:
+        if system is not None:
             config['sys_prio'] = system.get('priority')
 
         interface = conf.get('interface')
-        if interface != None:
+        if interface is not None:
             lag = interface.get('lag')
-            if lag != None:
+            if lag is not None:
                 lag_list = []
                 for each in lag:
                     each_lag = dict()
@@ -96,7 +100,7 @@ class LinkaggFacts(object):
                         'administrative-status')
 
                     lag_config = each.get('interface-lag-config')
-                    if lag_config != None:
+                    if lag_config is not None:
                         each_lag['description'] = lag_config.get('description')
                         each_lag['load_balance'] = lag_config.get(
                             'load-balance')
@@ -104,16 +108,16 @@ class LinkaggFacts(object):
                         each_lag['period'] = lag_config.get('period')
 
                     lag_link = each.get('lag')
-                    if lag_link != None:
+                    if lag_link is not None:
                         max_active = lag_link.get('maximum-active')
-                        if max_active != None:
+                        if max_active is not None:
                             each_lag['max_active'] = max_active.get('links')
                         min_active = lag_link.get('minimum-active')
-                        if min_active != None:
+                        if min_active is not None:
                             each_lag['min_active'] = min_active.get('links')
 
                     intf_config = each.get('interface-config')
-                    if intf_config != None:
+                    if intf_config is not None:
                         intf_config_list = []
                         for each_intf_config in intf_config:
                             intf_config_dict = dict()

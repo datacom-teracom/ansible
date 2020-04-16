@@ -4,6 +4,13 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+"""
+The module file for dmos_config
+"""
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
@@ -69,10 +76,6 @@ from ansible.module_utils.network.dmos.utils.utils import get_command_list_from_
 def main():
     """ main entry point for module execution
     """
-    backup_spec = dict(
-        filename=dict(),
-        dir_path=dict(type='path')
-    )
     argument_spec = dict(
         lines=dict(aliases=['commands'], type='list')
     )

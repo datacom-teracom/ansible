@@ -1,8 +1,11 @@
-#!/usr/bin/python
+#
 # -*- coding: utf-8 -*-
 # Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
 
 import re
 from ansible.module_utils.six import iteritems
@@ -91,7 +94,7 @@ def build_regex(pref, suf, last, tp):
 def build_regex_dict_key(pref, suf, last):
     # builds regex of dict keys
     ret = ".*/" + pref
-    if suf == 1 and last == True:
+    if suf == 1 and last:
         # this breaks if the list id has a '{' character and it is the last thing on keypath. Feel free to improve on this
         ret += "{([^{]*)}$"
     elif suf == 1:
@@ -104,7 +107,7 @@ def build_replace(pref, suf, idx):
     # builds replace string
     ret = "###" + re.sub('-', '_', pref)
     if suf == 1:
-        ret += "@@@\\{}@@@".format(str(idx))
+        ret += "@@@\\{0}@@@".format(str(idx))
 
     return ret
 
@@ -148,7 +151,7 @@ def parse_spec_to_regex(key, value, prefix, suffix, dict_keys):
             generated_regex[search] = replace
     else:
         search, replace = generate_search_replace(
-            prefix, suffix,  value, "leaf")
+            prefix, suffix, value, "leaf")
         generated_regex[search] = replace
 
     prefix.pop()
@@ -193,7 +196,7 @@ def parse_current_config(switch_config, arg_spec, module, dict_keys):
                             current = arr
                             found = True
                             break
-                    if found == False:
+                    if not found:
                         # there are no dicts with this id, so create a new dict with only the id value
                         current[name].append(
                             {dict_keys[key_value[KEY]]: key_value[VALUE]})

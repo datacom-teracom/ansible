@@ -26,6 +26,9 @@
 The arg spec for the dmos_vlan module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class VlanArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_vlan module
@@ -35,14 +38,14 @@ class VlanArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'interface': {'elements': 'dict',
-                                      'options': {'name': {'required': True,
-                                                           'type': 'str'},
-                                                  'tagged': {'type': 'bool'}},
-                                      'type': 'list'},
-                        'name': {'type': 'str'},
-                        'vlan_id': {'required': True, 'type': 'int'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'interface': {'elements': 'dict',
+                                                          'options': {'name': {'required': True,
+                                                                               'type': 'str'},
+                                                                      'tagged': {'type': 'bool'}},
+                                                          'type': 'list'},
+                                            'name': {'type': 'str'},
+                                            'vlan_id': {'required': True, 'type': 'int'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

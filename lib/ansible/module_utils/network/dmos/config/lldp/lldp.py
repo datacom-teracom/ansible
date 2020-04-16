@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -168,7 +172,7 @@ class Lldp(ConfigBase):
         dict_diff = differ.deepdiff()
 
         interface = dict_diff.get('interface')
-        if interface != None:
+        if interface is not None:
             for each in interface:
                 each = dict(each)
                 intf_name = each.get('name')
@@ -179,64 +183,64 @@ class Lldp(ConfigBase):
                     continue
 
                 admin_status = each.get('admin_status')
-                if admin_status != None:
+                if admin_status is not None:
                     commands.append(
                         '{0} admin-status {1}'.format(intf_cmd, admin_status))
 
                 notification = each.get('notification')
-                if notification != None:
+                if notification is not None:
                     commands.append('{0} {1} notification'.format(
                         '' if notification else 'no', intf_cmd).strip())
 
                 tlv_port_description = each.get('tlv_port_description')
-                if tlv_port_description != None:
+                if tlv_port_description is not None:
                     commands.append(
                         '{0} {1} tlvs-tx port-description'.format('' if tlv_port_description else 'no', intf_cmd).strip())
 
                 tlv_system_capabilities = each.get('tlv_system_capabilities')
-                if tlv_system_capabilities != None:
+                if tlv_system_capabilities is not None:
                     commands.append(
                         '{0} {1} tlvs-tx system-capabilities'.format('' if tlv_system_capabilities else 'no', intf_cmd).strip())
 
                 tlv_system_description = each.get('tlv_system_description')
-                if tlv_system_description != None:
+                if tlv_system_description is not None:
                     commands.append(
                         '{0} {1} tlvs-tx system-description'.format('' if tlv_system_description else 'no', intf_cmd).strip())
 
                 tlv_system_name = each.get('tlv_system_name')
-                if tlv_system_name != None:
+                if tlv_system_name is not None:
                     commands.append(
                         '{0} {1} tlvs-tx system-name'.format('' if tlv_system_name else 'no', intf_cmd).strip())
 
         msg_fast_tx = dict_diff.get('msg_fast_tx')
-        if msg_fast_tx != None:
+        if msg_fast_tx is not None:
             commands.append('lldp message-fast-tx {0}'.format(msg_fast_tx))
 
         msg_tx_hold_multi = dict_diff.get('msg_tx_hold_multi')
-        if msg_tx_hold_multi != None:
+        if msg_tx_hold_multi is not None:
             commands.append(
                 'lldp message-tx-hold-multiplier {0}'.format(msg_tx_hold_multi))
 
         msg_tx_interval = dict_diff.get('msg_tx_interval')
-        if msg_tx_interval != None:
+        if msg_tx_interval is not None:
             commands.append(
                 'lldp message-tx-interval {0}'.format(msg_tx_interval))
 
         notification_interval = dict_diff.get('notification_interval')
-        if notification_interval != None:
+        if notification_interval is not None:
             commands.append(
                 'lldp notification-interval {0}'.format(notification_interval))
 
         reinit_delay = dict_diff.get('reinit_delay')
-        if reinit_delay != None:
+        if reinit_delay is not None:
             commands.append('lldp reinit-delay {0}'.format(reinit_delay))
 
         tx_credit_max = dict_diff.get('tx_credit_max')
-        if tx_credit_max != None:
+        if tx_credit_max is not None:
             commands.append('lldp tx-credit-max  {0}'.format(tx_credit_max))
 
         tx_fast_init = dict_diff.get('tx_fast_init')
-        if tx_fast_init != None:
+        if tx_fast_init is not None:
             commands.append('lldp tx-fast-init {0}'.format(tx_fast_init))
 
         return commands
@@ -257,7 +261,7 @@ class Lldp(ConfigBase):
         dict_intsec = differ.deepintersect()
 
         interface = dict_intsec.get('interface')
-        if interface != None:
+        if interface is not None:
             for each in interface:
                 each = dict(each)
                 intf_name = each.get('name')
@@ -269,61 +273,61 @@ class Lldp(ConfigBase):
                     continue
 
                 admin_status = each.get('admin_status')
-                if admin_status != None:
+                if admin_status is not None:
                     commands.append('{0} admin-status'.format(intf_cmd))
 
                 notification = each.get('notification')
-                if notification != None:
+                if notification is not None:
                     commands.append('{0} notification'.format(intf_cmd))
 
                 tlv_port_description = each.get('tlv_port_description')
-                if tlv_port_description != None:
+                if tlv_port_description is not None:
                     commands.append(
                         '{0} tlvs-tx port-description'.format(intf_cmd))
 
                 tlv_system_capabilities = each.get('tlv_system_capabilities')
-                if tlv_system_capabilities != None:
+                if tlv_system_capabilities is not None:
                     commands.append(
                         '{0} tlvs-tx system-capabilities'.format(intf_cmd))
 
                 tlv_system_description = each.get('tlv_system_description')
-                if tlv_system_description != None:
+                if tlv_system_description is not None:
                     commands.append(
                         '{0} tlvs-tx system-description'.format(intf_cmd))
 
                 tlv_system_name = each.get('tlv_system_name')
-                if tlv_system_name != None:
+                if tlv_system_name is not None:
                     commands.append('{0} tlvs-tx system-name'.format(intf_cmd))
 
         msg_fast_tx = dict_intsec.get('msg_fast_tx')
-        if msg_fast_tx != None:
-            commands.append('no lldp message-fast-tx'.format(msg_fast_tx))
+        if msg_fast_tx is not None:
+            commands.append('no lldp message-fast-tx')
 
         msg_tx_hold_multi = dict_intsec.get('msg_tx_hold_multi')
-        if msg_tx_hold_multi != None:
+        if msg_tx_hold_multi is not None:
             commands.append(
-                'no lldp message-tx-hold-multiplier'.format(msg_tx_hold_multi))
+                'no lldp message-tx-hold-multiplier')
 
         msg_tx_interval = dict_intsec.get('msg_tx_interval')
-        if msg_tx_interval != None:
+        if msg_tx_interval is not None:
             commands.append(
-                'no lldp message-tx-interval'.format(msg_tx_interval))
+                'no lldp message-tx-interval')
 
         notification_interval = dict_intsec.get('notification_interval')
-        if notification_interval != None:
+        if notification_interval is not None:
             commands.append(
-                'no lldp notification-interval'.format(notification_interval))
+                'no lldp notification-interval')
 
         reinit_delay = dict_intsec.get('reinit_delay')
-        if reinit_delay != None:
-            commands.append('no lldp reinit-delay'.format(reinit_delay))
+        if reinit_delay is not None:
+            commands.append('no lldp reinit-delay')
 
         tx_credit_max = dict_intsec.get('tx_credit_max')
-        if tx_credit_max != None:
-            commands.append('no lldp tx-credit-max'.format(tx_credit_max))
+        if tx_credit_max is not None:
+            commands.append('no lldp tx-credit-max')
 
         tx_fast_init = dict_intsec.get('tx_fast_init')
-        if tx_fast_init != None:
-            commands.append('no lldp tx-fast-init'.format(tx_fast_init))
+        if tx_fast_init is not None:
+            commands.append('no lldp tx-fast-init')
 
         return commands

@@ -26,6 +26,9 @@
 The arg spec for the dmos_log module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class LogArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_log module
@@ -35,16 +38,16 @@ class LogArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'severity': {'choices': ['alert',
-                                                 'critical',
-                                                 'emergency',
-                                                 'error',
-                                                 'informational',
-                                                 'notice',
-                                                 'warning'],
-                                     'type': 'str'},
-                        'syslog': {'elements': 'str', 'type': 'list'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'severity': {'choices': ['alert',
+                                                                     'critical',
+                                                                     'emergency',
+                                                                     'error',
+                                                                     'informational',
+                                                                     'notice',
+                                                                     'warning'],
+                                                         'type': 'str'},
+                                            'syslog': {'elements': 'str', 'type': 'list'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

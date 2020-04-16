@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -176,18 +180,18 @@ class Vlan(ConfigBase):
                 continue
 
             name = diff.get('name')
-            if name != None:
+            if name is not None:
                 commands.append('{0} name {1}'.format(vlan_cmd, name))
 
             interface = diff.get('interface')
-            if interface != None:
+            if interface is not None:
                 for each in interface:
                     each = dict(each)
                     intf_name = each.get('name')
                     intf_cmd = '{0} interface {1}'.format(vlan_cmd, intf_name)
 
                     tagged = each.get('tagged')
-                    if tagged != None:
+                    if tagged is not None:
                         intf_cmd += ' tagged' if tagged else ' untagged'
                     commands.append(intf_cmd)
 
@@ -218,11 +222,11 @@ class Vlan(ConfigBase):
                 continue
 
             name = diff.get('name')
-            if name != None:
+            if name is not None:
                 commands.append('{0} name'.format(vlan_cmd))
 
             interface = diff.get('interface')
-            if interface != None:
+            if interface is not None:
                 for each in interface:
                     each = dict(each)
                     intf_name = each.get('name')
@@ -234,7 +238,7 @@ class Vlan(ConfigBase):
                         continue
 
                     tagged = each.get('tagged')
-                    if tagged != None:
+                    if tagged is not None:
                         intf_cmd += ' tagged' if tagged else ' untagged'
                     commands.append(intf_cmd)
 

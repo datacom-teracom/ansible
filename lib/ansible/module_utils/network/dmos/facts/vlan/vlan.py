@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class VlanFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['vlan-manager:dot1q']['vlan']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -83,13 +87,13 @@ class VlanFacts(object):
         config['name'] = conf.get('name')
 
         interface_value = conf.get('interface')
-        if interface_value != None:
+        if interface_value is not None:
             interface = []
             for each in interface_value:
                 each_interface = dict()
                 each_interface['name'] = each.get('interface-name')
                 tagged = each.get('tagged-untagged')
-                if tagged != None:
+                if tagged is not None:
                     each_interface['tagged'] = True if tagged == 'tagged' else False
                 interface.append(each_interface)
             config['interface'] = interface

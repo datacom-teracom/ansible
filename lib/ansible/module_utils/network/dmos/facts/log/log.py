@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class LogFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['dmos-log-manager:log']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -82,7 +86,7 @@ class LogFacts(object):
         config['severity'] = conf.get('severity')
 
         syslog_value = conf.get('syslog')
-        if syslog_value != None:
+        if syslog_value is not None:
             syslog = []
             for each in syslog_value['host']:
                 syslog.append(each['address'])

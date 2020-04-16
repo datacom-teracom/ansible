@@ -26,6 +26,9 @@
 The arg spec for the dmos_l2_interface module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class L2_interfaceArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_l2_interface module
@@ -35,21 +38,21 @@ class L2_interfaceArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'interface_name': {'required': True, 'type': 'str'},
-                        'native_vlan_id': {'type': 'int'},
-                        'qinq': {'type': 'bool'},
-                        'storm_control': {'elements': 'dict',
-                                          'options': {'percent': {'default': 1,
-                                                                  'type': 'float'},
-                                                      'traffic': {'choices': ['broadcast',
-                                                                              'multicast',
-                                                                              'unicast'],
-                                                                  'required': True,
-                                                                  'type': 'str'}},
-                                          'type': 'list'},
-                        'tpid': {'choices': ['0x88a8', '0x8100', '0x9100'],
-                                 'type': 'str'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'interface_name': {'required': True, 'type': 'str'},
+                                            'native_vlan_id': {'type': 'int'},
+                                            'qinq': {'type': 'bool'},
+                                            'storm_control': {'elements': 'dict',
+                                                              'options': {'percent': {'default': 1,
+                                                                                      'type': 'float'},
+                                                                          'traffic': {'choices': ['broadcast',
+                                                                                                  'multicast',
+                                                                                                  'unicast'],
+                                                                                      'required': True,
+                                                                                      'type': 'str'}},
+                                                              'type': 'list'},
+                                            'tpid': {'choices': ['0x88a8', '0x8100', '0x9100'],
+                                                     'type': 'str'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

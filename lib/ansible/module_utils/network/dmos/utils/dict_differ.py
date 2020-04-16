@@ -3,6 +3,9 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.six import iteritems
 from copy import deepcopy
 
@@ -10,7 +13,7 @@ from copy import deepcopy
 class DictDiffer():
     _AUXILIARY_KEY = 'AUXILIARY_KEY'
 
-    def __init__(self, base, comparable, config_keys={}):
+    def __init__(self, base, comparable, config_keys=None):
         if isinstance(base, list) and isinstance(comparable, list):
             self._is_list = True
             self._base = deepcopy(self._add_aux_key(base))
@@ -23,16 +26,18 @@ class DictDiffer():
             raise AssertionError(
                 "invalid or incompatible types of base and comparable")
 
+        if config_keys is None:
+            config_keys = {}
         self._config_keys = config_keys
 
     def _add_aux_key(self, raw_list):
         list_dict = dict()
-        list_dict[self._AUXILIARY_KEY] = raw_list if raw_list != None else []
+        list_dict[self._AUXILIARY_KEY] = raw_list if raw_list is not None else []
         return list_dict
 
     def _del_aux_key(self, raw_dict):
         aux_key = raw_dict.get(self._AUXILIARY_KEY)
-        return aux_key if aux_key != None else []
+        return aux_key if aux_key is not None else []
 
     def _transform(self, config, level=0):
         if isinstance(config, list):
@@ -45,12 +50,12 @@ class DictDiffer():
                         self._config_keys) & set(config[i])
                     for k in common_keys:
                         if level in self._config_keys[k]:
-                            aux['id__{}__{}'.format(
+                            aux['id__{0}__{1}'.format(
                                 k, config[i][k])] = config[i]
                 config = aux
         if isinstance(config, dict):
             aux = config
-            new_level = level+1
+            new_level = level + 1
             for sub_key in config:
                 aux[sub_key] = self._transform(config[sub_key], new_level)
         return config
@@ -116,7 +121,7 @@ class DictDiffer():
                     continue
                 updates[key] = list(set(comparable_value)
                                     & set(base.get(key)))
-            elif value != None:
+            elif value is not None:
                 updates[key] = value
 
         return updates

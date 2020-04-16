@@ -1,5 +1,25 @@
+#
+# -*- coding: utf-8 -*-
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
+
+DOCUMENTATION = """
+---
+author:
+  - Vinicius Kleinubing (@vgkleinubing) <vinicius.grubel@datacom.com.br>
+  - LDS Labs (@lds-labs)
+cliconf: dmos
+short_description: Use junos cliconf to run command on Juniper Junos OS platform
+description:
+  - This dmos plugin provides low level abstraction apis for
+    sending and receiving CLI commands from Datacom DmOS network devices.
+version_added: "2.10"
+"""
+
 
 import re
 import time

@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -172,7 +176,7 @@ class User(ConfigBase):
             cmd = ''
             name = user_config.get('name')
             if name is not None:
-                cmd = 'user {}'.format(name)
+                cmd = 'user {0}'.format(name)
             alias = user_config.get('alias')
             if alias is not None:
                 for each in alias:
@@ -180,20 +184,20 @@ class User(ConfigBase):
                     expansion = each.get('expansion')
                     if alias_name is None:
                         continue
-                    temp_cmd = '{} alias {}'.format(cmd, alias_name)
+                    temp_cmd = '{0} alias {1}'.format(cmd, alias_name)
                     if expansion is not None:
-                        temp_cmd = '{} expansion {}'.format(temp_cmd, expansion)
+                        temp_cmd = '{0} expansion {1}'.format(temp_cmd, expansion)
                     commands.append(temp_cmd)
 
             description = user_config.get('description')
             if description is not None:
-                commands.append('{} description {}'.format(cmd, description))
+                commands.append('{0} description {1}'.format(cmd, description))
             session = user_config.get('session')
             if session is not None:
                 for key, value in session.items():
                     if isinstance(value, bool):
                         value = str(value).lower()
-                    commands.append('{} session {} {}'.format(cmd, key.replace('_', '-'), value))
+                    commands.append('{0} session {1} {2}'.format(cmd, key.replace('_', '-'), value))
 
         return commands
 
@@ -215,7 +219,7 @@ class User(ConfigBase):
             name = user.get('name')
             if name is None:
                 continue
-            no_user_cmd = 'no user {}'.format(name)
+            no_user_cmd = 'no user {0}'.format(name)
             if user.get('n_keys') == 1:
                 commands.append(no_user_cmd)
                 continue
@@ -225,17 +229,17 @@ class User(ConfigBase):
                     alias_name = each.get('name')
                     if alias_name is None:
                         continue
-                    temp_cmd = '{} alias {}'.format(no_user_cmd, alias_name)
+                    temp_cmd = '{0} alias {1}'.format(no_user_cmd, alias_name)
                     commands.append(temp_cmd)
 
             description = user.get('description')
             if description is not None:
-                commands.append('{} description'.format(no_user_cmd))
+                commands.append('{0} description'.format(no_user_cmd))
             session = user.get('session')
             if session is not None:
                 for key in session.keys():
                     if key == 'n_keys':
                         continue
-                    commands.append('{} session {}'.format(no_user_cmd, key.replace('_', '-')))
+                    commands.append('{0} session {1}'.format(no_user_cmd, key.replace('_', '-')))
 
         return commands

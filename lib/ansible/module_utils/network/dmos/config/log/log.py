@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -168,11 +172,11 @@ class Log(ConfigBase):
         dict_diff = differ.deepdiff()
 
         severity = dict_diff.get('severity')
-        if severity != None:
+        if severity is not None:
             commands.append('log severity {0}'.format(severity))
 
         syslog = dict_diff.get('syslog')
-        if syslog != None:
+        if syslog is not None:
             for each in syslog:
                 commands.append('log syslog {0}'.format(each))
 
@@ -194,11 +198,11 @@ class Log(ConfigBase):
         dict_intsec = differ.deepintersect()
 
         severity = dict_intsec.get('severity')
-        if severity != None:
+        if severity is not None:
             commands.append('no log severity')
 
         syslog = dict_intsec.get('syslog')
-        if syslog != None:
+        if syslog is not None:
             for each in syslog:
                 commands.append('no log syslog {0}'.format(each))
 

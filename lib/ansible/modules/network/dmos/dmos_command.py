@@ -17,7 +17,6 @@ ANSIBLE_METADATA = {
     'supported_by': 'community'
 }
 
-
 DOCUMENTATION = """
 ---
 module: dmos_command

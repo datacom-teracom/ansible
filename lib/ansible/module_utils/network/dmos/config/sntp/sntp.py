@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -168,12 +172,12 @@ class Sntp(ConfigBase):
         dict_diff = differ.deepdiff()
 
         auth = dict_diff.get('auth')
-        if auth != None:
+        if auth is not None:
             commands.append(
                 '{0} sntp authenticate'.format('' if auth else 'no').strip())
 
         auth_key = dict_diff.get('auth_key')
-        if auth_key != None:
+        if auth_key is not None:
             for each in auth_key:
                 each = dict(each)
                 id_value = each.get('id')
@@ -184,24 +188,24 @@ class Sntp(ConfigBase):
                     continue
 
                 pass_value = each.get('pass')
-                if pass_value != None:
+                if pass_value is not None:
                     auth_key_cmd += ' md5 {0}'.format(pass_value)
                 commands.append(auth_key_cmd)
 
         client = dict_diff.get('client')
-        if client != None:
+        if client is not None:
             commands.append('{0} sntp client'.format('' if client else 'no').strip())
 
         max_poll = dict_diff.get('max_poll')
-        if max_poll != None:
+        if max_poll is not None:
             commands.append('sntp max-poll {0}'.format(max_poll))
 
         min_poll = dict_diff.get('min_poll')
-        if min_poll != None:
+        if min_poll is not None:
             commands.append('sntp min-poll {0}'.format(min_poll))
 
         server = dict_diff.get('server')
-        if server != None:
+        if server is not None:
             for each in server:
                 each = dict(each)
                 address = each.get('address')
@@ -212,19 +216,19 @@ class Sntp(ConfigBase):
                     continue
 
                 key_id = each.get('key_id')
-                if key_id != None:
+                if key_id is not None:
                     server_cmd += ' key {0}'.format(key_id)
                 commands.append(server_cmd)
 
         source = dict_diff.get('source')
-        if source != None:
+        if source is not None:
             source = dict(source)
             ipv4 = source.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 commands.append(
                     'sntp source ipv4 address {0}'.format(ipv4))
             ipv6 = source.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 commands.append(
                     'sntp source ipv6 address {0}'.format(ipv6))
 
@@ -246,11 +250,11 @@ class Sntp(ConfigBase):
         dict_intsec = differ.deepintersect()
 
         auth = dict_intsec.get('auth')
-        if auth != None:
+        if auth is not None:
             commands.append('no sntp authenticate')
 
         auth_key = dict_intsec.get('auth_key')
-        if auth_key != None:
+        if auth_key is not None:
             for each in auth_key:
                 each = dict(each)
                 id_value = each.get('id')
@@ -263,19 +267,19 @@ class Sntp(ConfigBase):
                     continue
 
         client = dict_intsec.get('client')
-        if client != None:
+        if client is not None:
             commands.append('no sntp client')
 
         max_poll = dict_intsec.get('max_poll')
-        if max_poll != None:
+        if max_poll is not None:
             commands.append('no sntp max-poll')
 
         min_poll = dict_intsec.get('min_poll')
-        if min_poll != None:
+        if min_poll is not None:
             commands.append('no sntp min-poll')
 
         server = dict_intsec.get('server')
-        if server != None:
+        if server is not None:
             for each in server:
                 each = dict(each)
                 address = each.get('address')
@@ -287,18 +291,18 @@ class Sntp(ConfigBase):
                     continue
 
                 key_id = each.get('key_id')
-                if key_id != None:
+                if key_id is not None:
                     server_cmd += ' key'
                 commands.append(server_cmd)
 
         source = dict_intsec.get('source')
-        if source != None:
+        if source is not None:
             source = dict(source)
             ipv4 = source.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 commands.append('no sntp source ipv4')
             ipv6 = source.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 commands.append('no sntp source ipv6')
 
         return commands

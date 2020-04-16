@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class LldpFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['dmos-lldp:lldp']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -80,7 +84,7 @@ class LldpFacts(object):
         config = deepcopy(spec)
 
         interface_value = conf.get('dmos-lldp-interface:interface')
-        if interface_value != None:
+        if interface_value is not None:
             interface = []
             for each in interface_value:
                 each_interface = dict()
@@ -89,7 +93,7 @@ class LldpFacts(object):
                 each_interface['notification'] = True if 'notification' in each else False
 
                 tlvs = each.get('tlvs-tx')
-                if tlvs != None:
+                if tlvs is not None:
                     each_interface['tlv_port_description'] = tlvs.get('port-description')
                     each_interface['tlv_system_capabilities'] = tlvs.get('system-name')
                     each_interface['tlv_system_description'] = tlvs.get('system-description')

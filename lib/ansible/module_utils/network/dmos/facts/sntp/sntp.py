@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -51,7 +55,7 @@ class SntpFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['dmos-sntp-interface:sntp']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -83,7 +87,7 @@ class SntpFacts(object):
         config['auth'] = dict_has_key(conf, 'authenticate')
 
         auth_key_value = conf.get('authentication-key')
-        if auth_key_value != None:
+        if auth_key_value is not None:
             auth_key = []
             for each in auth_key_value:
                 each_auth_key = dict()
@@ -98,16 +102,16 @@ class SntpFacts(object):
         config['min_poll'] = conf.get('min-poll')
 
         source_value = conf.get('source')
-        if source_value != None:
+        if source_value is not None:
             ipv4 = source_value.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 config['source']['ipv4'] = ipv4['address']['ip']
             ipv6 = source_value.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 config['source']['ipv6'] = ipv6['address']['ip']
 
         server_value = conf.get('server')
-        if server_value != None:
+        if server_value is not None:
             server = []
             for each in server_value:
                 each_server = dict()

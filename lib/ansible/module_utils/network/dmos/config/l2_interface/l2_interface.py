@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -177,17 +181,17 @@ class L2_interface(ConfigBase):
                 continue
 
             native_vlan_id = diff.get('native_vlan_id')
-            if native_vlan_id != None:
+            if native_vlan_id is not None:
                 commands.append(
                     '{0} native-vlan vlan-id {1}'.format(switchport_cmd, native_vlan_id))
 
             qinq = diff.get('qinq')
-            if qinq != None:
+            if qinq is not None:
                 commands.append(
                     '{0} {1} qinq'.format('' if qinq else 'no', switchport_cmd).strip())
 
             storm_control = diff.get('storm_control')
-            if storm_control != None:
+            if storm_control is not None:
                 for each in storm_control:
                     each = dict(each)
                     traffic = each.get('traffic')
@@ -198,7 +202,7 @@ class L2_interface(ConfigBase):
                     commands.append(storm_control_cmd)
 
             tpid = diff.get('tpid')
-            if tpid != None:
+            if tpid is not None:
                 commands.append(
                     '{0} tpid {1}'.format(switchport_cmd, tpid))
 
@@ -230,17 +234,17 @@ class L2_interface(ConfigBase):
                 continue
 
             native_vlan_id = diff.get('native_vlan_id')
-            if native_vlan_id != None:
+            if native_vlan_id is not None:
                 commands.append(
                     '{0} native-vlan'.format(switchport_cmd))
 
             qinq = diff.get('qinq')
-            if qinq != None:
+            if qinq is not None:
                 commands.append(
                     '{0} qinq'.format(switchport_cmd))
 
             storm_control = diff.get('storm_control')
-            if storm_control != None:
+            if storm_control is not None:
                 for each in storm_control:
                     each = dict(each)
                     traffic = each.get('traffic')
@@ -250,7 +254,7 @@ class L2_interface(ConfigBase):
                     commands.append(storm_control_cmd)
 
             tpid = diff.get('tpid')
-            if tpid != None:
+            if tpid is not None:
                 commands.append(
                     '{0} tpid'.format(switchport_cmd))
 

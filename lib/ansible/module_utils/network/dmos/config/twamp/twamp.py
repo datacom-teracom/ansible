@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -169,18 +173,18 @@ class Twamp(ConfigBase):
         dict_diff = differ.deepdiff()
 
         reflector = dict_diff.get('reflector')
-        if reflector != None:
+        if reflector is not None:
             reflector_cmd = 'oam twamp reflector'
 
             admin_status = reflector.get('admin_status')
-            if admin_status != None:
+            if admin_status is not None:
                 commands.append(
                     '{0} administrative-status {1}'.format(reflector_cmd, admin_status))
 
             ipv4 = reflector.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 client_address = ipv4.get('client_address')
-                if client_address != None:
+                if client_address is not None:
                     for each in client_address:
                         address = each.get('address')
                         client_address_cmd = '{0} ipv4 client-address {1}'.format(
@@ -191,12 +195,12 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_address_cmd, state))
 
                 client_network = ipv4.get('client_network')
-                if client_network != None:
+                if client_network is not None:
                     for each in client_network:
                         network = each.get('network')
                         client_network_cmd = '{0} ipv4 client-network {1}'.format(
@@ -207,14 +211,14 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_network_cmd, state))
 
             ipv6 = reflector.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 client_address = ipv6.get('client_address')
-                if client_address != None:
+                if client_address is not None:
                     for each in client_address:
                         address = each.get('address')
                         client_address_cmd = '{0} ipv6 client-address {1}'.format(
@@ -225,12 +229,12 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_address_cmd, state))
 
                 client_network = ipv6.get('client_network')
-                if client_network != None:
+                if client_network is not None:
                     for each in client_network:
                         network = each.get('network')
                         client_network_cmd = '{0} ipv6 client-network {1}'.format(
@@ -241,26 +245,26 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_network_cmd, state))
 
             port = reflector.get('port')
-            if port != None:
+            if port is not None:
                 commands.append(
                     '{0} port {1}'.format(reflector_cmd, port))
 
         sender = dict_diff.get('sender')
-        if sender != None:
+        if sender is not None:
             sender_cmd = 'oam twamp sender'
 
             admin_status = sender.get('admin_status')
-            if admin_status != None:
+            if admin_status is not None:
                 commands.append(
                     '{0} administrative-status {1}'.format(sender_cmd, admin_status))
 
             connection = sender.get('connection')
-            if connection != None:
+            if connection is not None:
                 for each in connection:
                     conn_id = each.get('id')
                     conn_cmd = '{0} connection {1}'.format(sender_cmd, conn_id)
@@ -270,51 +274,51 @@ class Twamp(ConfigBase):
                         continue
 
                     admin_status = each.get('admin_status')
-                    if admin_status != None:
+                    if admin_status is not None:
                         commands.append(
                             '{0} administrative-status {1}'.format(conn_cmd, admin_status))
 
                     ipv4 = each.get('ipv4')
-                    if ipv4 != None:
+                    if ipv4 is not None:
                         source_address = ipv4.get('source_address')
-                        if source_address != None:
+                        if source_address is not None:
                             commands.append(
                                 '{0} ipv4 source-address {1}'.format(conn_cmd, source_address))
 
                         target_address = ipv4.get('target_address')
-                        if target_address != None:
+                        if target_address is not None:
                             commands.append(
                                 '{0} ipv4 target-address {1}'.format(conn_cmd, target_address))
 
                     ipv6 = each.get('ipv6')
-                    if ipv6 != None:
+                    if ipv6 is not None:
                         source_address = ipv6.get('source_address')
-                        if source_address != None:
+                        if source_address is not None:
                             commands.append(
                                 '{0} ipv6 source-address {1}'.format(conn_cmd, source_address))
 
                         target_address = ipv6.get('target_address')
-                        if target_address != None:
+                        if target_address is not None:
                             commands.append(
                                 '{0} ipv6 target-address {1}'.format(conn_cmd, target_address))
 
                     number_of_packets = each.get('number_of_packets')
-                    if number_of_packets != None:
+                    if number_of_packets is not None:
                         commands.append(
                             '{0} number-of-packets {1}'.format(conn_cmd, number_of_packets))
 
                     server_port = each.get('server_port')
-                    if server_port != None:
+                    if server_port is not None:
                         commands.append(
                             '{0} server-port {1}'.format(conn_cmd, server_port))
 
                     test_interval = each.get('test_interval')
-                    if test_interval != None:
+                    if test_interval is not None:
                         commands.append(
                             '{0} test-interval {1}'.format(conn_cmd, test_interval))
 
                     test_session = each.get('test_session')
-                    if test_session != None:
+                    if test_session is not None:
                         for each_test_session in test_session:
                             test_session_id = each_test_session.get('id')
                             test_session_cmd = '{0} test-session {1}'.format(
@@ -325,50 +329,50 @@ class Twamp(ConfigBase):
                                 continue
 
                             test_session_ipv4 = each_test_session.get('ipv4')
-                            if test_session_ipv4 != None:
+                            if test_session_ipv4 is not None:
                                 source_address = test_session_ipv4.get(
                                     'source_address')
-                                if source_address != None:
+                                if source_address is not None:
                                     commands.append(
                                         '{0} ipv4 source-address {1}'.format(test_session_cmd, source_address))
 
                                 target_address = test_session_ipv4.get(
                                     'target_address')
-                                if target_address != None:
+                                if target_address is not None:
                                     commands.append(
                                         '{0} ipv4 target-address {1}'.format(test_session_cmd, target_address))
 
                             test_session_ipv6 = each_test_session.get('ipv6')
-                            if test_session_ipv6 != None:
+                            if test_session_ipv6 is not None:
                                 source_address = test_session_ipv6.get(
                                     'source_address')
-                                if source_address != None:
+                                if source_address is not None:
                                     commands.append(
                                         '{0} ipv6 source-address {1}'.format(test_session_cmd, source_address))
 
                                 target_address = test_session_ipv6.get(
                                     'target_address')
-                                if target_address != None:
+                                if target_address is not None:
                                     commands.append(
                                         '{0} ipv6 target-address {1}'.format(test_session_cmd, target_address))
 
                             dscp = each_test_session.get('dscp')
-                            if dscp != None:
+                            if dscp is not None:
                                 commands.append(
                                     '{0} dscp {1}'.format(test_session_cmd, dscp))
 
                             max_port = each_test_session.get('max_port')
-                            if max_port != None:
+                            if max_port is not None:
                                 commands.append(
                                     '{0} max-port {1}'.format(test_session_cmd, max_port))
 
                             min_port = each_test_session.get('min_port')
-                            if min_port != None:
+                            if min_port is not None:
                                 commands.append(
                                     '{0} min-port {1}'.format(test_session_cmd, min_port))
 
                             packet_size = each_test_session.get('packet_size')
-                            if packet_size != None:
+                            if packet_size is not None:
                                 commands.append(
                                     '{0} packet-size {1}'.format(test_session_cmd, packet_size))
 
@@ -391,18 +395,18 @@ class Twamp(ConfigBase):
         dict_intsec = differ.deepintersect()
 
         reflector = dict_intsec.get('reflector')
-        if reflector != None:
+        if reflector is not None:
             reflector_cmd = 'no oam twamp reflector'
 
             admin_status = reflector.get('admin_status')
-            if admin_status != None:
+            if admin_status is not None:
                 commands.append(
                     '{0} administrative-status'.format(reflector_cmd))
 
             ipv4 = reflector.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 client_address = ipv4.get('client_address')
-                if client_address != None:
+                if client_address is not None:
                     for each in client_address:
                         address = each.get('address')
                         client_address_cmd = '{0} ipv4 client-address {1}'.format(
@@ -414,12 +418,12 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_address_cmd, state))
 
                 client_network = ipv4.get('client_network')
-                if client_network != None:
+                if client_network is not None:
                     for each in client_network:
                         network = each.get('network')
                         client_network_cmd = '{0} ipv4 client-network {1}'.format(
@@ -431,14 +435,14 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_network_cmd, state))
 
             ipv6 = reflector.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 client_address = ipv6.get('client_address')
-                if client_address != None:
+                if client_address is not None:
                     for each in client_address:
                         address = each.get('address')
                         client_address_cmd = '{0} ipv6 client-address {1}'.format(
@@ -450,12 +454,12 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_address_cmd, state))
 
                 client_network = ipv6.get('client_network')
-                if client_network != None:
+                if client_network is not None:
                     for each in client_network:
                         network = each.get('network')
                         client_network_cmd = '{0} ipv6 client-network {1}'.format(
@@ -467,26 +471,26 @@ class Twamp(ConfigBase):
                             continue
 
                         state = each.get('state')
-                        if state != None:
+                        if state is not None:
                             commands.append('{0} {1}'.format(
                                 client_network_cmd, state))
 
             port = reflector.get('port')
-            if port != None:
+            if port is not None:
                 commands.append(
                     '{0} port'.format(reflector_cmd))
 
         sender = dict_intsec.get('sender')
-        if sender != None:
+        if sender is not None:
             sender_cmd = 'no oam twamp sender'
 
             admin_status = sender.get('admin_status')
-            if admin_status != None:
+            if admin_status is not None:
                 commands.append(
                     '{0} administrative-status'.format(sender_cmd))
 
             connection = sender.get('connection')
-            if connection != None:
+            if connection is not None:
                 for each in connection:
                     conn_id = each.get('id')
                     conn_cmd = '{0} connection {1}'.format(sender_cmd, conn_id)
@@ -497,51 +501,51 @@ class Twamp(ConfigBase):
                         continue
 
                     admin_status = each.get('admin_status')
-                    if admin_status != None:
+                    if admin_status is not None:
                         commands.append(
                             '{0} administrative-status'.format(conn_cmd))
 
                     ipv4 = each.get('ipv4')
-                    if ipv4 != None:
+                    if ipv4 is not None:
                         source_address = ipv4.get('source_address')
-                        if source_address != None:
+                        if source_address is not None:
                             commands.append(
                                 '{0} ipv4 source-address'.format(conn_cmd))
 
                         target_address = ipv4.get('target_address')
-                        if target_address != None:
+                        if target_address is not None:
                             commands.append(
                                 '{0} ipv4 target-address'.format(conn_cmd))
 
                     ipv6 = each.get('ipv6')
-                    if ipv6 != None:
+                    if ipv6 is not None:
                         source_address = ipv6.get('source_address')
-                        if source_address != None:
+                        if source_address is not None:
                             commands.append(
                                 '{0} ipv6 source-address'.format(conn_cmd))
 
                         target_address = ipv6.get('target_address')
-                        if target_address != None:
+                        if target_address is not None:
                             commands.append(
                                 '{0} ipv6 target-address'.format(conn_cmd))
 
                     number_of_packets = each.get('number_of_packets')
-                    if number_of_packets != None:
+                    if number_of_packets is not None:
                         commands.append(
                             '{0} number-of-packets'.format(conn_cmd))
 
                     server_port = each.get('server_port')
-                    if server_port != None:
+                    if server_port is not None:
                         commands.append(
                             '{0} server-port'.format(conn_cmd))
 
                     test_interval = each.get('test_interval')
-                    if test_interval != None:
+                    if test_interval is not None:
                         commands.append(
                             '{0} test-interval'.format(conn_cmd))
 
                     test_session = each.get('test_session')
-                    if test_session != None:
+                    if test_session is not None:
                         for each_test_session in test_session:
                             test_session_id = each_test_session.get('id')
                             test_session_cmd = '{0} test-session {1}'.format(
@@ -553,50 +557,50 @@ class Twamp(ConfigBase):
                                 continue
 
                             test_session_ipv4 = each_test_session.get('ipv4')
-                            if test_session_ipv4 != None:
+                            if test_session_ipv4 is not None:
                                 source_address = test_session_ipv4.get(
                                     'source_address')
-                                if source_address != None:
+                                if source_address is not None:
                                     commands.append(
                                         '{0} ipv4 source-address'.format(test_session_cmd))
 
                                 target_address = test_session_ipv4.get(
                                     'target_address')
-                                if target_address != None:
+                                if target_address is not None:
                                     commands.append(
                                         '{0} ipv4 target-address'.format(test_session_cmd))
 
                             test_session_ipv6 = each_test_session.get('ipv6')
-                            if test_session_ipv6 != None:
+                            if test_session_ipv6 is not None:
                                 source_address = test_session_ipv6.get(
                                     'source_address')
-                                if source_address != None:
+                                if source_address is not None:
                                     commands.append(
                                         '{0} ipv6 source-address'.format(test_session_cmd))
 
                                 target_address = test_session_ipv6.get(
                                     'target_address')
-                                if target_address != None:
+                                if target_address is not None:
                                     commands.append(
                                         '{0} ipv6 target-address'.format(test_session_cmd))
 
                             dscp = each_test_session.get('dscp')
-                            if dscp != None:
+                            if dscp is not None:
                                 commands.append(
                                     '{0} dscp'.format(test_session_cmd))
 
                             max_port = each_test_session.get('max_port')
-                            if max_port != None:
+                            if max_port is not None:
                                 commands.append(
                                     '{0} max-port'.format(test_session_cmd))
 
                             min_port = each_test_session.get('min_port')
-                            if min_port != None:
+                            if min_port is not None:
                                 commands.append(
                                     '{0} min-port'.format(test_session_cmd))
 
                             packet_size = each_test_session.get('packet_size')
-                            if packet_size != None:
+                            if packet_size is not None:
                                 commands.append(
                                     '{0} packet-size'.format(test_session_cmd))
 

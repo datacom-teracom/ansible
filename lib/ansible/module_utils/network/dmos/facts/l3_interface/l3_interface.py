@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class L3_interfaceFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['interface']['dmos-ip-application:l3']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -86,22 +90,22 @@ class L3_interfaceFacts(object):
         config['vrf'] = conf.get('vrf')
 
         vlan_link_detect = conf.get('vlan-link-detect')
-        if vlan_link_detect != None:
+        if vlan_link_detect is not None:
             config['vlan_link_detect'] = vlan_link_detect.get('enabled')
 
         lower_layer_if = conf.get('lower-layer-if')
-        if lower_layer_if != None:
+        if lower_layer_if is not None:
             config['lower_layer_if'] = lower_layer_if.get('vlan')
 
         ipv4 = conf.get('ipv4')
-        if ipv4 != None:
+        if ipv4 is not None:
             address = ipv4.get('address')
-            if address != None:
+            if address is not None:
                 ipv4_dict = dict()
                 ipv4_dict['address'] = address.get('ip')
 
                 secondary = address.get('secondary')
-                if secondary != None:
+                if secondary is not None:
                     secondary_list = []
                     for each in secondary:
                         secondary_list.append(each.get('ip'))
@@ -111,12 +115,12 @@ class L3_interfaceFacts(object):
                 config['ipv4'] = ipv4_dict
 
         ipv6 = conf.get('ipv6')
-        if ipv6 != None:
+        if ipv6 is not None:
             ipv6_dict = dict()
             ipv6_dict['enable'] = ipv6.get('enable')
 
             address = ipv6.get('address')
-            if address != None:
+            if address is not None:
                 ipv6_list = []
                 for each in address:
                     ipv6_list.append(each.get('ip'))
@@ -124,9 +128,9 @@ class L3_interfaceFacts(object):
                 ipv6_dict['address'] = ipv6_list
 
             nd = ipv6.get('nd')
-            if nd != None:
+            if nd is not None:
                 ra = nd.get('ra')
-                if ra != None:
+                if ra is not None:
                     ra_dict = dict()
                     ra_dict['lifetime'] = ra.get('lifetime')
                     ra_dict['max_interval'] = ra.get('max-interval')
@@ -134,7 +138,7 @@ class L3_interfaceFacts(object):
                     ra_dict['suppress'] = ra.get('suppress')
 
                     prefix = ra.get('prefix')
-                    if prefix != None:
+                    if prefix is not None:
                         prefix_list = []
                         for each in prefix:
                             prefix_dict = dict()
@@ -149,7 +153,7 @@ class L3_interfaceFacts(object):
                         ra_dict['prefix'] = prefix_list
 
                     mtu = ra.get('mtu')
-                    if mtu != None:
+                    if mtu is not None:
                         ra_dict['mtu_suppress'] = mtu.get('suppress')
 
                     ipv6_dict['nd_ra'] = ra_dict

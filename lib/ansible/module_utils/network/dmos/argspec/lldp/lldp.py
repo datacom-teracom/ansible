@@ -26,6 +26,9 @@
 The arg spec for the dmos_lldp module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class LldpArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_lldp module
@@ -35,28 +38,28 @@ class LldpArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'interface': {'elements': 'dict',
-                                      'options': {'admin_status': {'choices': ['disabled',
-                                                                               'rx-only',
-                                                                               'tx-and-rx',
-                                                                               'tx-only'],
-                                                                   'type': 'str'},
-                                                  'name': {'required': True,
-                                                           'type': 'str'},
-                                                  'notification': {'type': 'bool'},
-                                                  'tlv_port_description': {'type': 'bool'},
-                                                  'tlv_system_capabilities': {'type': 'bool'},
-                                                  'tlv_system_description': {'type': 'bool'},
-                                                  'tlv_system_name': {'type': 'bool'}},
-                                      'type': 'list'},
-                        'msg_fast_tx': {'type': 'int'},
-                        'msg_tx_hold_multi': {'type': 'int'},
-                        'msg_tx_interval': {'type': 'int'},
-                        'notification_interval': {'type': 'int'},
-                        'reinit_delay': {'type': 'int'},
-                        'tx_credit_max': {'type': 'int'},
-                        'tx_fast_init': {'type': 'int'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'interface': {'elements': 'dict',
+                                                          'options': {'admin_status': {'choices': ['disabled',
+                                                                                                   'rx-only',
+                                                                                                   'tx-and-rx',
+                                                                                                   'tx-only'],
+                                                                                       'type': 'str'},
+                                                                      'name': {'required': True,
+                                                                               'type': 'str'},
+                                                                      'notification': {'type': 'bool'},
+                                                                      'tlv_port_description': {'type': 'bool'},
+                                                                      'tlv_system_capabilities': {'type': 'bool'},
+                                                                      'tlv_system_description': {'type': 'bool'},
+                                                                      'tlv_system_name': {'type': 'bool'}},
+                                                          'type': 'list'},
+                                            'msg_fast_tx': {'type': 'int'},
+                                            'msg_tx_hold_multi': {'type': 'int'},
+                                            'msg_tx_interval': {'type': 'int'},
+                                            'notification_interval': {'type': 'int'},
+                                            'reinit_delay': {'type': 'int'},
+                                            'tx_credit_max': {'type': 'int'},
+                                            'tx_fast_init': {'type': 'int'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

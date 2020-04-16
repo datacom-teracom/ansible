@@ -1,6 +1,6 @@
 #
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -168,12 +172,12 @@ class Linkagg(ConfigBase):
         dict_diff = differ.deepdiff()
 
         sys_prio = dict_diff.get('sys_prio')
-        if sys_prio != None:
+        if sys_prio is not None:
             commands.append(
                 'link-aggregation system-priority {0}'.format(sys_prio))
 
         lag = dict_diff.get('lag')
-        if lag != None:
+        if lag is not None:
             for each_lag in lag:
                 commands.extend(self._get_lag_commands(each_lag))
 
@@ -190,42 +194,42 @@ class Linkagg(ConfigBase):
             return commands
 
         admin_status = diff_dict.get('admin_status')
-        if admin_status != None:
+        if admin_status is not None:
             commands.append(
                 '{0} administrative-status {1}'.format(lag_cmd, admin_status))
 
         description = diff_dict.get('description')
-        if description != None:
+        if description is not None:
             commands.append(
                 '{0} description "{1}"'.format(lag_cmd, description))
 
         interface = diff_dict.get('interface')
-        if interface != None:
+        if interface is not None:
             for each_interface in interface:
                 commands.extend(self._get_interface_commands(
                     each_interface, lag_id))
 
         load_balance = diff_dict.get('load_balance')
-        if load_balance != None:
+        if load_balance is not None:
             commands.append(
                 '{0} load-balance {1}'.format(lag_cmd, load_balance))
 
         max_active = diff_dict.get('max_active')
-        if max_active != None:
+        if max_active is not None:
             commands.append(
                 '{0} maximum-active links {1}'.format(lag_cmd, max_active))
 
         min_active = diff_dict.get('min_active')
-        if min_active != None:
+        if min_active is not None:
             commands.append(
                 '{0} minimum-active links {1}'.format(lag_cmd, min_active))
 
         mode = diff_dict.get('mode')
-        if mode != None:
+        if mode is not None:
             commands.append('{0} mode {1}'.format(lag_cmd, mode))
 
         period = diff_dict.get('period')
-        if period != None:
+        if period is not None:
             commands.append('{0} period {1}'.format(lag_cmd, period))
 
         return commands
@@ -236,7 +240,7 @@ class Linkagg(ConfigBase):
             lag_id, intf_name)
 
         port_prio = diff_dict.get('port_prio')
-        if port_prio != None:
+        if port_prio is not None:
             intf_cmd += ' port-priority {0}'.format(port_prio)
 
         return [intf_cmd]
@@ -257,11 +261,11 @@ class Linkagg(ConfigBase):
         dict_intsec = differ.deepintersect()
 
         sys_prio = dict_intsec.get('sys_prio')
-        if sys_prio != None:
+        if sys_prio is not None:
             commands.append('no link-aggregation system-priority')
 
         lag = dict_intsec.get('lag')
-        if lag != None:
+        if lag is not None:
             for each_lag in lag:
                 commands.extend(self._delete_lag_commands(each_lag))
 
@@ -279,37 +283,37 @@ class Linkagg(ConfigBase):
             return commands
 
         admin_status = dict_intsec.get('admin_status')
-        if admin_status != None:
+        if admin_status is not None:
             commands.append('{0} administrative-status'.format(lag_cmd))
 
         description = dict_intsec.get('description')
-        if description != None:
+        if description is not None:
             commands.append('{0} description'.format(lag_cmd))
 
         interface = dict_intsec.get('interface')
-        if interface != None:
+        if interface is not None:
             for each_interface in interface:
                 commands.extend(self._delete_interface_commands(
                     each_interface, lag_id))
 
         load_balance = dict_intsec.get('load_balance')
-        if load_balance != None:
+        if load_balance is not None:
             commands.append('{0} load-balance'.format(lag_cmd))
 
         max_active = dict_intsec.get('max_active')
-        if max_active != None:
+        if max_active is not None:
             commands.append('{0} maximum-active'.format(lag_cmd))
 
         min_active = dict_intsec.get('min_active')
-        if min_active != None:
+        if min_active is not None:
             commands.append('{0} minimum-active'.format(lag_cmd))
 
         mode = dict_intsec.get('mode')
-        if mode != None:
+        if mode is not None:
             commands.append('{0} mode'.format(lag_cmd))
 
         period = dict_intsec.get('period')
-        if period != None:
+        if period is not None:
             commands.append('{0} period'.format(lag_cmd))
 
         return commands
@@ -324,7 +328,7 @@ class Linkagg(ConfigBase):
             return [intf_cmd]
 
         port_prio = dict_intsec.get('port_prio')
-        if port_prio != None:
+        if port_prio is not None:
             intf_cmd += ' port-priority'
 
         return [intf_cmd]

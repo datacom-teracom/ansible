@@ -1,6 +1,6 @@
 #
 # -*- coding: utf-8 -*-
-# Copyright 2019 Red Hat
+# Copyright 2020 Datacom (Teracom Telematica S/A) <datacom.com.br>
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
@@ -10,6 +10,10 @@ is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
 created
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ansible.module_utils.network.common.cfg.base import ConfigBase
 from ansible.module_utils.network.common.utils import to_list
 from ansible.module_utils.network.dmos.facts.facts import Facts
@@ -177,75 +181,75 @@ class L3_interface(ConfigBase):
                 continue
 
             description = diff.get('description')
-            if description != None:
+            if description is not None:
                 commands.append('{0} description "{1}"'.format(
                     intf_cmd, description))
 
             ip_mtu = diff.get('ip_mtu')
-            if ip_mtu != None:
+            if ip_mtu is not None:
                 commands.append('{0} ip-mtu {1}'.format(intf_cmd, ip_mtu))
 
             lower_layer_if = diff.get('lower_layer_if')
-            if lower_layer_if != None:
+            if lower_layer_if is not None:
                 commands.append(
                     '{0} lower-layer-if vlan {1}'.format(intf_cmd, lower_layer_if))
 
             vlan_link_detect = diff.get('vlan_link_detect')
-            if vlan_link_detect != None:
+            if vlan_link_detect is not None:
                 commands.append('{0} vlan-link-detect {1}'.format(intf_cmd,
                                                                   'enabled' if vlan_link_detect else 'disabled'))
 
             vrf = diff.get('vrf')
-            if vrf != None:
+            if vrf is not None:
                 commands.append('{0} vrf {1}'.format(intf_cmd, vrf))
 
             ipv4 = diff.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 address = ipv4.get('address')
-                if address != None:
+                if address is not None:
                     commands.append(
                         '{0} ipv4 address {1}'.format(intf_cmd, address))
 
                 secondary = ipv4.get('secondary')
-                if secondary != None:
+                if secondary is not None:
                     for each in secondary:
                         commands.append(
                             '{0} ipv4 address secondary {1}'.format(intf_cmd, each))
 
             ipv6 = diff.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 enable = ipv6.get('enable')
-                if enable != None:
+                if enable is not None:
                     commands.append('{0} {1} ipv6 enable'.format(
                         '' if enable else 'no', intf_cmd).strip())
 
                 address = ipv6.get('address')
-                if address != None:
+                if address is not None:
                     for each in address:
                         commands.append(
                             '{0} ipv6 address {1}'.format(intf_cmd, each))
 
                 nd_ra = ipv6.get('nd_ra')
-                if nd_ra != None:
+                if nd_ra is not None:
                     nd_ra_cmd = '{0} ipv6 nd ra'.format(intf_cmd)
 
                     lifetime = nd_ra.get('lifetime')
-                    if lifetime != None:
+                    if lifetime is not None:
                         commands.append(
                             '{0} lifetime {1}'.format(nd_ra_cmd, lifetime))
 
                     max_interval = nd_ra.get('max_interval')
-                    if max_interval != None:
+                    if max_interval is not None:
                         commands.append(
                             '{0} max-interval {1}'.format(nd_ra_cmd, max_interval))
 
                     min_interval = nd_ra.get('min_interval')
-                    if min_interval != None:
+                    if min_interval is not None:
                         commands.append(
                             '{0} min-interval {1}'.format(nd_ra_cmd, min_interval))
 
                     prefix = nd_ra.get('prefix')
-                    if prefix != None:
+                    if prefix is not None:
                         for each in prefix:
                             each = dict(each)
                             prefix_ip = each.get('ip')
@@ -257,27 +261,27 @@ class L3_interface(ConfigBase):
                                 continue
 
                             no_advertise = each.get('no_advertise')
-                            if no_advertise != None:
+                            if no_advertise is not None:
                                 commands.append(
                                     '{0} {1} no-advertise'.format('' if no_advertise else 'no', prefix_cmd).strip())
 
                             no_autoconfig = each.get('no_autoconfig')
-                            if no_autoconfig != None:
+                            if no_autoconfig is not None:
                                 commands.append(
                                     '{0} {1} no-autoconfig'.format('' if no_autoconfig else 'no', prefix_cmd).strip())
 
                             off_link = each.get('off_link')
-                            if off_link != None:
+                            if off_link is not None:
                                 commands.append(
                                     '{0} {1} off-link'.format('' if off_link else 'no', prefix_cmd).strip())
 
                     suppress = nd_ra.get('suppress')
-                    if suppress != None:
+                    if suppress is not None:
                         commands.append('{0} {1} suppress'.format(
                             '' if suppress else 'no', nd_ra_cmd).strip())
 
                     mtu_suppress = nd_ra.get('mtu_suppress')
-                    if mtu_suppress != None:
+                    if mtu_suppress is not None:
                         commands.append('{0} {1} mtu suppress'.format(
                             '' if mtu_suppress else 'no', nd_ra_cmd).strip())
 
@@ -308,65 +312,65 @@ class L3_interface(ConfigBase):
                 continue
 
             description = diff.get('description')
-            if description != None:
+            if description is not None:
                 commands.append('{0} description'.format(intf_cmd))
 
             ip_mtu = diff.get('ip_mtu')
-            if ip_mtu != None:
+            if ip_mtu is not None:
                 commands.append('{0} ip-mtu'.format(intf_cmd))
 
             lower_layer_if = diff.get('lower_layer_if')
-            if lower_layer_if != None:
+            if lower_layer_if is not None:
                 commands.append('{0} lower-layer-if vlan'.format(intf_cmd))
 
             # Ignoring vlan link detect deletion since its not possible, always returns error
             # vlan_link_detect = diff.get('vlan_link_detect')
-            # if vlan_link_detect != None:
+            # if vlan_link_detect is not None:
             #     commands.append('{0} vlan-link-detect'.format(intf_cmd))
 
             vrf = diff.get('vrf')
-            if vrf != None:
+            if vrf is not None:
                 commands.append('{0} vrf'.format(intf_cmd))
 
             ipv4 = diff.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 address = ipv4.get('address')
-                if address != None:
+                if address is not None:
                     commands.append(
                         '{0} ipv4 address {1}'.format(intf_cmd, address))
 
                 secondary = ipv4.get('secondary')
-                if secondary != None:
+                if secondary is not None:
                     for each in secondary:
                         commands.append(
                             '{0} ipv4 address secondary {1}'.format(intf_cmd, each))
 
             ipv6 = diff.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 address = ipv6.get('address')
-                if address != None:
+                if address is not None:
                     for each in address:
                         commands.append(
                             '{0} ipv6 address {1}'.format(intf_cmd, each))
 
                 nd_ra = ipv6.get('nd_ra')
-                if nd_ra != None:
+                if nd_ra is not None:
                     nd_ra_cmd = '{0} ipv6 nd ra'.format(intf_cmd)
 
                     lifetime = nd_ra.get('lifetime')
-                    if lifetime != None:
+                    if lifetime is not None:
                         commands.append('{0} lifetime'.format(nd_ra_cmd))
 
                     max_interval = nd_ra.get('max_interval')
-                    if max_interval != None:
+                    if max_interval is not None:
                         commands.append('{0} max-interval'.format(nd_ra_cmd))
 
                     min_interval = nd_ra.get('min_interval')
-                    if min_interval != None:
+                    if min_interval is not None:
                         commands.append('{0} min-interval'.format(nd_ra_cmd))
 
                     prefix = nd_ra.get('prefix')
-                    if prefix != None:
+                    if prefix is not None:
                         for each in prefix:
                             each = dict(each)
                             prefix_ip = each.get('ip')
@@ -379,30 +383,30 @@ class L3_interface(ConfigBase):
                                 continue
 
                             no_advertise = each.get('no_advertise')
-                            if no_advertise != None:
+                            if no_advertise is not None:
                                 commands.append(
                                     '{0} no-advertise'.format(prefix_cmd))
 
                             no_autoconfig = each.get('no_autoconfig')
-                            if no_autoconfig != None:
+                            if no_autoconfig is not None:
                                 commands.append(
                                     '{0} no-autoconfig'.format(prefix_cmd))
 
                             off_link = each.get('off_link')
-                            if off_link != None:
+                            if off_link is not None:
                                 commands.append(
                                     '{0} off-link'.format(prefix_cmd))
 
                     suppress = nd_ra.get('suppress')
-                    if suppress != None:
+                    if suppress is not None:
                         commands.append('{0} suppress'.format(nd_ra_cmd))
 
                     mtu_suppress = nd_ra.get('mtu_suppress')
-                    if mtu_suppress != None:
+                    if mtu_suppress is not None:
                         commands.append('{0} mtu suppress'.format(nd_ra_cmd))
 
                 enable = ipv6.get('enable')
-                if enable != None:
+                if enable is not None:
                     commands.append('{0} ipv6 enable'.format(intf_cmd))
 
         return commands

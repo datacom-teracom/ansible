@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -50,7 +54,7 @@ class TwampFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['oam']['dmos-twamp-app:twamp']
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -79,14 +83,14 @@ class TwampFacts(object):
         """
         config = deepcopy(spec)
         reflector = conf.get('reflector')
-        if reflector != None:
+        if reflector is not None:
             reflector_dict = {}
 
             reflector_dict['admin_status'] = reflector.get('administrative-status')
             reflector_dict['port'] = reflector.get('port')
 
             ipv4 = reflector.get('ipv4')
-            if ipv4 != None:
+            if ipv4 is not None:
                 ipv4_dict = {}
 
                 client_address = ipv4.get('client-address')
@@ -116,7 +120,7 @@ class TwampFacts(object):
                 reflector_dict['ipv4'] = ipv4_dict
 
             ipv6 = reflector.get('ipv6')
-            if ipv6 != None:
+            if ipv6 is not None:
                 ipv6_dict = {}
 
                 client_address = ipv6.get('client-address')
@@ -148,7 +152,7 @@ class TwampFacts(object):
             config['reflector'] = reflector_dict
 
         sender = conf.get('dmos-twamp-app-client:sender')
-        if sender != None:
+        if sender is not None:
             sender_dict = {}
 
             sender_dict['admin_status'] = sender.get('administrative-status')
@@ -163,7 +167,7 @@ class TwampFacts(object):
                     each_connection['admin_status'] = each.get('administrative-status')
 
                     ipv4 = each.get('ipv4')
-                    if ipv4 != None:
+                    if ipv4 is not None:
                         ipv4_dict = {}
 
                         source_address = ipv4.get('source-address')
@@ -177,7 +181,7 @@ class TwampFacts(object):
                         each_connection['ipv4'] = ipv4_dict
 
                     ipv6 = each.get('ipv6')
-                    if ipv6 != None:
+                    if ipv6 is not None:
                         ipv6_dict = {}
 
                         source_address = ipv6.get('source-address')
@@ -204,7 +208,7 @@ class TwampFacts(object):
                             each_test_session_dict['id'] = each_test_session.get('id')
 
                             ipv4 = each_test_session.get('ipv4')
-                            if ipv4 != None:
+                            if ipv4 is not None:
                                 ipv4_dict = {}
 
                                 source_address = ipv4.get('source-address')
@@ -218,7 +222,7 @@ class TwampFacts(object):
                                 each_test_session_dict['ipv4'] = ipv4_dict
 
                             ipv6 = each_test_session.get('ipv6')
-                            if ipv6 != None:
+                            if ipv6 is not None:
                                 ipv6_dict = {}
 
                                 source_address = ipv6.get('source-address')

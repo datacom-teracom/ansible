@@ -26,6 +26,9 @@
 The arg spec for the dmos_user module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class UserArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_user module
@@ -35,22 +38,22 @@ class UserArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'alias': {'elements': 'dict',
-                                  'options': {'expansion': {'type': 'str'},
-                                              'name': {'type': 'str'}},
-                                  'type': 'list'},
-                        'description': {'type': 'str'},
-                        'name': {'type': 'str'},
-                        'session': {'options': {'complete_on_space': {'type': 'bool'},
-                                                'devtools': {'type': 'bool'},
-                                                'display_level': {'type': 'int'},
-                                                'history': {'type': 'int'},
-                                                'idle_timeout': {'type': 'int'},
-                                                'ignore_leading_space': {'type': 'bool'},
-                                                'paginate': {'type': 'bool'},
-                                                'show_defaults': {'type': 'bool'}},
-                                    'type': 'dict'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'alias': {'elements': 'dict',
+                                                      'options': {'expansion': {'type': 'str'},
+                                                                  'name': {'type': 'str'}},
+                                                      'type': 'list'},
+                                            'description': {'type': 'str'},
+                                            'name': {'type': 'str'},
+                                            'session': {'options': {'complete_on_space': {'type': 'bool'},
+                                                                    'devtools': {'type': 'bool'},
+                                                                    'display_level': {'type': 'int'},
+                                                                    'history': {'type': 'int'},
+                                                                    'idle_timeout': {'type': 'int'},
+                                                                    'ignore_leading_space': {'type': 'bool'},
+                                                                    'paginate': {'type': 'bool'},
+                                                                    'show_defaults': {'type': 'bool'}},
+                                                        'type': 'dict'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

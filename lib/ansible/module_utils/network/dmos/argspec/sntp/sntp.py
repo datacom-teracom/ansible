@@ -26,6 +26,9 @@
 The arg spec for the dmos_sntp module
 """
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 
 class SntpArgs(object):  # pylint: disable=R0903
     """The arg spec for the dmos_sntp module
@@ -35,24 +38,24 @@ class SntpArgs(object):  # pylint: disable=R0903
         pass
 
     argument_spec = {'config': {'elements': 'dict',
-            'options': {'auth': {'type': 'bool'},
-                        'auth_key': {'elements': 'dict',
-                                     'options': {'id': {'required': True,
-                                                        'type': 'int'},
-                                                 'pass': {'type': 'str'}},
-                                     'type': 'list'},
-                        'client': {'type': 'bool'},
-                        'max_poll': {'type': 'int'},
-                        'min_poll': {'type': 'int'},
-                        'server': {'elements': 'dict',
-                                   'options': {'address': {'required': True,
-                                                           'type': 'str'},
-                                               'key_id': {'type': 'int'}},
-                                   'type': 'list'},
-                        'source': {'options': {'ipv4': {'type': 'str'},
-                                               'ipv6': {'type': 'str'}},
-                                   'type': 'dict'}},
-            'type': 'list'},
- 'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
-           'default': 'merged',
-           'type': 'str'}}  # pylint: disable=C0301
+                                'options': {'auth': {'type': 'bool'},
+                                            'auth_key': {'elements': 'dict',
+                                                         'options': {'id': {'required': True,
+                                                                            'type': 'int'},
+                                                                     'pass': {'type': 'str'}},
+                                                         'type': 'list'},
+                                            'client': {'type': 'bool'},
+                                            'max_poll': {'type': 'int'},
+                                            'min_poll': {'type': 'int'},
+                                            'server': {'elements': 'dict',
+                                                       'options': {'address': {'required': True,
+                                                                               'type': 'str'},
+                                                                   'key_id': {'type': 'int'}},
+                                                       'type': 'list'},
+                                            'source': {'options': {'ipv4': {'type': 'str'},
+                                                                   'ipv6': {'type': 'str'}},
+                                                       'type': 'dict'}},
+                                'type': 'list'},
+                     'state': {'choices': ['merged', 'replaced', 'overridden', 'deleted'],
+                               'default': 'merged',
+                               'type': 'str'}}  # pylint: disable=C0301

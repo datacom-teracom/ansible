@@ -9,6 +9,10 @@ It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
+
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 import json
 from copy import deepcopy
 
@@ -51,8 +55,7 @@ class L2_interfaceFacts(object):
         try:
             data_dict = json.loads(data)['data']
             data_list = data_dict['dmos-base:config']['switchport-native-vlan:switchport']['interface']
-
-        except:
+        except (ValueError, KeyError):
             pass
         else:
             data_list = data_list if isinstance(data_list, list) else [data_list]
@@ -84,33 +87,33 @@ class L2_interfaceFacts(object):
         config['interface_name'] = conf.get('interface-name')
 
         native_vlan = conf.get('native-vlan')
-        if native_vlan != None:
+        if native_vlan is not None:
             config['native_vlan_id'] = native_vlan.get('vlan-id')
 
         config['qinq'] = dict_has_key(conf, 'switchport-qinq:qinq')
 
         storm_control = conf.get('dmos-storm-control:storm-control')
-        if storm_control != None:
+        if storm_control is not None:
             storm_control_list = []
 
             broadcast = storm_control.get('broadcast')
-            if broadcast != None:
+            if broadcast is not None:
                 percent = broadcast.get('percent')
-                if percent != None:
+                if percent is not None:
                     storm_control_list.append(
                         {'traffic': 'broadcast', 'percent': percent})
 
             multicast = storm_control.get('multicast')
-            if multicast != None:
+            if multicast is not None:
                 percent = multicast.get('percent')
-                if percent != None:
+                if percent is not None:
                     storm_control_list.append(
                         {'traffic': 'multicast', 'percent': percent})
 
             unicast = storm_control.get('unicast')
-            if unicast != None:
+            if unicast is not None:
                 percent = unicast.get('percent')
-                if percent != None:
+                if percent is not None:
                     storm_control_list.append(
                         {'traffic': 'unicast', 'percent': percent})
 
